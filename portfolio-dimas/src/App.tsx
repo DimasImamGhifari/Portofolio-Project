@@ -799,6 +799,21 @@ function App() {
         },
       });
 
+      // Create rotating orb animation
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          scrub: 1,
+          trigger: '.interest-bg-text-section',
+          start: 'top center',
+          end: 'bottom center',
+        },
+      });
+
+      tl.to('#rotating-orb', {
+        rotation: 1080, // 3 full rotations (360 * 3)
+        ease: 'none',
+      });
+
       // Parallax text for interest section
       gsap.to('.interest-bg-text.top', {
         xPercent: 20,
@@ -1195,6 +1210,13 @@ function App() {
           <div className="interest-bg">
             <div className="interest-bg-text top gradient-text">Creative</div>
             <div className="interest-bg-text bottom gradient-text">Passion</div>
+          </div>
+          <div className="rotating-elements-container">
+            <div className="rotating-orb rotating-orb-1" id="rotating-orb-1"></div>
+            <div className="rotating-orb rotating-orb-2" id="rotating-orb-2"></div>
+            <div className="rotating-orb rotating-orb-3" id="rotating-orb-3"></div>
+            <div className="rotating-orb rotating-orb-4" id="rotating-orb-4"></div>
+            <div className="rotating-orb rotating-orb-5" id="rotating-orb-5"></div>
           </div>
         </section>
 

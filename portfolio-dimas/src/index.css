@@ -1836,6 +1836,26 @@ section {
 }
 
 
+.rotating-element-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  width: 300px;
+  height: 300px;
+}
+
+.rotating-orb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-pink), transparent 70%);
+  opacity: 0.1;
+  filter: blur(40px);
+  will-change: transform;
+}
+
 .bg-text-container {
   text-align: center;
   z-index: 2;

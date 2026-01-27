@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 const sections = [
   { id: 'hero', label: 'Identity' },
   { id: 'origin', label: 'Origin' },
@@ -875,10 +876,27 @@ function App() {
       document.body.classList.remove('scrolling');
     }
 
-    return () => {
-      ctx.revert();
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    // Add parallax effect to existing floating orbs
+    const orbs = document.querySelectorAll('.orb');
+    orbs.forEach((orb, index) => {
+      const speed = (index + 1) * 0.02; // Different speed for each orb
+
+      // Create scroll trigger for parallax effect
+      ScrollTrigger.create({
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.5, // Smooth scrubbing
+        onUpdate: (self) => {
+          // Calculate offset based on scroll progress and speed
+          const offset = self.progress * 100 * speed;
+          gsap.set(orb, {
+            y: `-=${offset * 0.5}`, // Move opposite direction of scroll
+            x: `+=${offset * 0.2}`, // Small horizontal movement
+          });
+        }
+      });
+    });
   }, [isLoading, isScrolling]);
 
   const scrollToSection = (id: string) => {

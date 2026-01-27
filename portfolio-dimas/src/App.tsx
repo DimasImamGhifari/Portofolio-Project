@@ -92,6 +92,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorDotRef = useRef<HTMLDivElement>(null);
@@ -99,6 +100,8 @@ function App() {
   const progressRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const scrollTimeoutRef = useRef<number | null>(null);
 
   // Create particles
   const createParticles = useCallback(() => {
@@ -132,6 +135,50 @@ function App() {
     }
   }, []);
 
+  // Create interactive particles for hero section
+  const createInteractiveParticles = useCallback(() => {
+    if (!heroRef.current) return;
+
+    const heroContent = heroRef.current.querySelector('.hero-content');
+    if (!heroContent) return;
+
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'hero-particles';
+    heroContent.appendChild(particleContainer);
+
+    const particleCount = 20;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'hero-particle';
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.width = `${Math.random() * 3 + 1}px`;
+      particle.style.height = particle.style.width;
+      particleContainer.appendChild(particle);
+
+      // Random floating animation
+      gsap.to(particle, {
+        y: `+=${(Math.random() - 0.5) * 50}`,
+        x: `+=${(Math.random() - 0.5) * 50}`,
+        duration: Math.random() * 3 + 2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: Math.random() * 2,
+      });
+
+      // Pulsing animation
+      gsap.to(particle, {
+        scale: Math.random() * 0.5 + 0.8,
+        duration: Math.random() * 2 + 1,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: Math.random() * 2,
+      });
+    }
+  }, []);
+
   // Initialize Lenis
   useEffect(() => {
     const lenis = new Lenis({
@@ -150,6 +197,22 @@ function App() {
     requestAnimationFrame(raf);
 
     lenis.on('scroll', ScrollTrigger.update);
+
+    // Track scrolling activity
+    lenis.on('scroll', () => {
+      setIsScrolling(true);
+
+      // Clear previous timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      // Set timeout to mark as not scrolling after 150ms of inactivity
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+    });
+
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
@@ -157,6 +220,9 @@ function App() {
 
     return () => {
       lenis.destroy();
+      if (scrollTimeoutRef.current) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -276,6 +342,7 @@ function App() {
         onComplete: () => {
           setIsLoading(false);
           createParticles();
+          createInteractiveParticles();
         },
       }, '+=0.3')
       .set('.loading-screen', { display: 'none' });
@@ -773,8 +840,36 @@ function App() {
 
     }, mainRef);
 
-    return () => ctx.revert();
-  }, [isLoading]);
+    // Mouse move parallax effect for hero section
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return;
+
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+
+      const heroCircles = heroRef.current.querySelectorAll('.parallax-element');
+      heroCircles.forEach((el, index) => {
+        const speed = (index + 1) * 0.05;
+        (el as HTMLElement).style.transform = `translate(-50%, -50%) translate(${xAxis * speed}px, ${yAxis * speed}px) translateZ(${index * -50}px)`;
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // Update abstract circle animations based on scroll state
+    if (isScrolling) {
+      document.body.classList.add('scrolling');
+      document.body.classList.remove('not-scrolling');
+    } else {
+      document.body.classList.add('not-scrolling');
+      document.body.classList.remove('scrolling');
+    }
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [isLoading, isScrolling]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -797,6 +892,15 @@ function App() {
           <div className="loading-bar"></div>
         </div>
         <span className="loading-text">Loading Experience</span>
+      </div>
+
+      {/* Abstract Circular Animations */}
+      <div className="abstract-circles">
+        <div className="abstract-circle"></div>
+        <div className="abstract-circle"></div>
+        <div className="abstract-circle"></div>
+        <div className="abstract-circle"></div>
+        <div className="abstract-circle"></div>
       </div>
 
       {/* Background Effects */}
@@ -836,34 +940,41 @@ function App() {
         {/* HERO */}
         <section className="hero" id="hero">
           <div className="hero-bg">
-            <div className="hero-circle hero-circle-1" style={{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }}></div>
-            <div className="hero-circle hero-circle-2" style={{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }}></div>
-            <div className="hero-circle hero-circle-3" style={{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }}></div>
-            <div className="hero-rotating-text" style={{ opacity: 0 }}>
-              <svg viewBox="0 0 500 500">
-                <defs>
-                  <path id="textPath" d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0" fill="none" />
-                </defs>
-                <text>
-                  <textPath href="#textPath">
-                    FRONTEND DEVELOPER • INTERACTIVE WEB • MOTION DESIGN • CREATIVE CODE •
-                  </textPath>
-                </text>
-              </svg>
+            <div className="hero-layer">
+              <div className="parallax-element hero-circle hero-circle-1" style={{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }}></div>
+              <div className="parallax-element hero-circle hero-circle-2" style={{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }}></div>
+              <div className="parallax-element hero-circle hero-circle-3" style={{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }}></div>
+              <div className="parallax-element hero-rotating-text" style={{ opacity: 0 }}>
+                <svg viewBox="0 0 500 500">
+                  <defs>
+                    <path id="textPath" d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0" fill="none" />
+                  </defs>
+                  <text>
+                    <textPath href="#textPath">
+                      FRONTEND DEVELOPER • INTERACTIVE WEB • MOTION DESIGN • CREATIVE CODE •
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
             </div>
           </div>
 
           <div className="hero-content">
             <div className="hero-name">
-              <h1>Dimas</h1>
-              <h1>Imam</h1>
-              <h1>Ghifari</h1>
+              <h1 className="gradient-text interactive-text">Dimas</h1>
+              <h1 className="gradient-text interactive-text">Imam</h1>
+              <h1 className="gradient-text interactive-text">Ghifari</h1>
             </div>
             <div className="hero-subtitle">
-              <p>Frontend Developer & Interactive Web Enthusiast</p>
+              <p className="interactive-text">Frontend Developer & Interactive Web Enthusiast</p>
             </div>
             <div className="hero-tagline">
-              <span>Building immersive digital experiences through motion and code.</span>
+              <span className="interactive-text">Building immersive digital experiences through motion and code.</span>
+            </div>
+            <div className="hero-cta">
+              <button className="hero-button gradient-border">
+                <span>Explore My Work</span>
+              </button>
             </div>
           </div>
 
@@ -909,7 +1020,7 @@ function App() {
               <span>Who I Am</span>
             </div>
             <div className="section-title">
-              <h2>About</h2>
+              <h2 className="gradient-text">About</h2>
             </div>
             <div className="about-text">
               <p>A student and developer who enjoys turning ideas into interactive web experiences.</p>
@@ -933,7 +1044,7 @@ function App() {
           </div>
           <div className="education-content">
             <div className="section-title">
-              <h2>Education</h2>
+              <h2 className="gradient-text">Education</h2>
             </div>
             <div className="education-main">
               <h3>Informatics Engineering</h3>
@@ -950,7 +1061,7 @@ function App() {
         {/* JOURNEY */}
         <section className="journey" id="journey">
           <div className="journey-bg">
-            <div className="journey-glow"></div>
+            <div className="journey-glow animated-gradient"></div>
             <div className="journey-rings">
               <div className="journey-ring journey-ring-1"></div>
               <div className="journey-ring journey-ring-2"></div>
@@ -959,7 +1070,7 @@ function App() {
           </div>
           <div className="journey-content">
             <div className="section-title">
-              <h2>Journey</h2>
+              <h2 className="gradient-text">Journey</h2>
             </div>
             <div className="journey-age">
               <h3>20s</h3>
@@ -977,7 +1088,7 @@ function App() {
         <section className="experience" id="experience">
           <div className="experience-content">
             <div className="section-title">
-              <h2>Experience</h2>
+              <h2 className="gradient-text">Experience</h2>
             </div>
             <ul className="experience-list">
               {experiences.map((exp, index) => (
@@ -1000,7 +1111,7 @@ function App() {
         <section className="stack" id="stack">
           <div className="stack-content">
             <div className="section-title">
-              <h2>Stack</h2>
+              <h2 className="gradient-text">Stack</h2>
             </div>
             <ul className="stack-list">
               {skills.map((skill, index) => (
@@ -1021,12 +1132,12 @@ function App() {
         {/* INTEREST */}
         <section className="interest" id="interest">
           <div className="interest-bg">
-            <div className="interest-bg-text top">Creative</div>
-            <div className="interest-bg-text bottom">Passion</div>
+            <div className="interest-bg-text top gradient-text">Creative</div>
+            <div className="interest-bg-text bottom gradient-text">Passion</div>
           </div>
           <div className="interest-content">
             <div className="section-title">
-              <h2>Interest</h2>
+              <h2 className="gradient-text">Interest</h2>
             </div>
             <ul className="interest-list">
               {interests.map((interest, index) => (
@@ -1047,7 +1158,7 @@ function App() {
         {/* CONTACT */}
         <section className="contact" id="contact">
           <div className="contact-bg">
-            <div className="contact-glow"></div>
+            <div className="contact-glow animated-gradient"></div>
             <div className="contact-lines">
               <div className="contact-line contact-line-h contact-line-h-1"></div>
               <div className="contact-line contact-line-h contact-line-h-2"></div>
@@ -1057,7 +1168,7 @@ function App() {
           </div>
           <div className="contact-content">
             <div className="contact-main">
-              <h2>Let's create something immersive.</h2>
+              <h2 className="gradient-text">Let's create something immersive.</h2>
             </div>
             <div className="contact-sub">
               <p>Get in touch</p>

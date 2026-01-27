@@ -14,6 +14,7 @@ const sections = [
   { id: 'journey', label: 'Journey' },
   { id: 'experience', label: 'Experience' },
   { id: 'stack', label: 'Stack' },
+  { id: 'interest-bg', label: 'Creative' },
   { id: 'interest', label: 'Interest' },
   { id: 'contact', label: 'Contact' },
 ];
@@ -33,10 +34,10 @@ const skills = [
 ];
 
 const interests = [
-  { title: 'Interactive Web Experiences', icon: 'globe' },
-  { title: 'Scroll-based Storytelling', icon: 'scroll' },
-  { title: 'Cinematic UI Design', icon: 'film' },
-  { title: 'Game & Film Inspired Interfaces', icon: 'gamepad' },
+  { title: 'UI/UX Design', icon: 'globe' },
+  { title: 'Motorcycle', icon: 'scroll' },
+  { title: 'Film Inspired Interfaces', icon: 'film' },
+  { title: 'Game', icon: 'gamepad' },
 ];
 
 // Particle component
@@ -773,7 +774,32 @@ function App() {
         },
       });
 
-      // Parallax text
+      // Animate the background text to slide in
+      gsap.to('.interest-bg-text.top', {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.interest-bg-text-section',
+          start: 'top center',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      gsap.to('.interest-bg-text.bottom', {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.interest-bg-text-section',
+          start: 'top center',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // Parallax text for interest section
       gsap.to('.interest-bg-text.top', {
         xPercent: 20,
         scrollTrigger: {
@@ -793,6 +819,7 @@ function App() {
           scrub: 1,
         },
       });
+
 
       // =====================
       // CONTACT SECTION
@@ -1163,12 +1190,16 @@ function App() {
           </div>
         </section>
 
-        {/* INTEREST */}
-        <section className="interest" id="interest">
+        {/* INTEREST - BACKGROUND TEXT PART */}
+        <section className="interest-bg-text-section" id="interest-bg">
           <div className="interest-bg">
             <div className="interest-bg-text top gradient-text">Creative</div>
             <div className="interest-bg-text bottom gradient-text">Passion</div>
           </div>
+        </section>
+
+        {/* INTEREST - CONTENT PART */}
+        <section className="interest" id="interest">
           <div className="interest-content">
             <div className="section-title">
               <h2 className="gradient-text">Interest</h2>

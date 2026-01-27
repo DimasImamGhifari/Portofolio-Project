@@ -14,29 +14,56 @@ const sections = [
   { id: 'journey', label: 'Journey' },
   { id: 'experience', label: 'Experience' },
   { id: 'stack', label: 'Stack' },
-  { id: 'interest-bg', label: 'Creative' },
+  { id: 'projects', label: 'Projects' },
   { id: 'interest', label: 'Interest' },
   { id: 'contact', label: 'Contact' },
 ];
 
 const experiences = [
   'Frontend Web Projects',
+  'Backend Web Projects',
   'Academic Projects',
-  'Internship & Practical Development',
   'UI & Interaction Design',
 ];
 
 const skills = [
-  { name: 'HTML / CSS / JavaScript', level: 90 },
-  { name: 'GSAP & ScrollTrigger', level: 85 },
-  { name: 'React / Vue', level: 80 },
-  { name: 'UI Animation & Motion Design', level: 85 },
+  { name: 'HTML / CSS / JavaScript', level: 70 },
+  { name: 'Flutter', level: 40 },
+  { name: 'React / Vue', level: 75 },
+  { name: 'UI Animation & Motion Design', level: 55 },
+];
+
+const projects = [
+  {
+    title: 'Inventaris Barang - Dinas Kominfo HSU',
+    description: 'Inventory Management Website for Dinas Komunikasi Informatika dan Persandian Hulu Sungai Utara',
+    tech: ['PHP', 'VUE', 'Laravel'],
+    link: 'https://github.com/DimasImamGhifari11/Website-Inventaris-Barang',
+  },
+  {
+    title: 'ShopZone – Group Project Mobile Shopping App',
+    description: 'ShopZone is a simple mobile shopping application built with Flutter as a group project. It focuses on basic e-commerce features and a clean, user-friendly interface.',
+    tech: ['Flutter', 'Dart', 'Firebase'],
+    link: 'https://github.com/aryakusuma1/ShopZone-project',
+  },
+  {
+    title: 'Personal Portfolio Website',
+    description: 'A personal portfolio website designed to present my projects, technical skills, and academic background in a clean and structured layout.',
+    tech: ['React', 'TypeScript', 'CSS'],
+    link: 'https://github.com/DimasImamGhifari11/Portofolio-Project',
+  },
+  {
+    title: 'Pixelzone - Game Website Project',
+    description: 'Pixel Zone is a game website created as an academic assignment to showcase and sell a game through an attractive and user-friendly interface.',
+    tech: ['PHP', 'VUE', 'Laravel'],
+    link: 'https://github.com/DimasImamGhifari11/Pixelzone-project',
+  },
 ];
 
 const interests = [
-  { title: 'UI/UX Design', icon: 'globe' },
+  { title: 'Web Development', icon: 'globe' },
   { title: 'Motorcycle', icon: 'scroll' },
-  { title: 'Film Inspired Interfaces', icon: 'film' },
+  { title: 'Film', icon: 'film' },
   { title: 'Game', icon: 'gamepad' },
 ];
 
@@ -59,10 +86,13 @@ const Icon = ({ name }: { name: string }) => {
         <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
       </svg>
     ),
-    scroll: (
+    motorcycle: (
       <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4" />
-        <path d="M19 3H9a2 2 0 0 0-2 2v14" />
+        <circle cx="5" cy="17" r="3" />
+        <circle cx="19" cy="17" r="3" />
+        <path d="M5 14l4-7h4l3 3h3" />
+        <path d="M9 7l-2 3" />
+        <path d="M14 10l5 4" />
       </svg>
     ),
     film: (
@@ -578,6 +608,12 @@ function App() {
           duration: 0.8,
           ease: 'power3.out',
         }, '-=0.5')
+        .to('.education-main h4', {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+        }, '-=0.3')
         .to('.education-sub p', {
           opacity: 1,
           y: 0,
@@ -634,17 +670,23 @@ function App() {
           duration: 1,
           ease: 'power4.out',
         })
-        .to('.journey-age h3', {
-          opacity: 1,
-          scale: 1,
-          duration: 1.5,
-          ease: 'power4.out',
-        }, '-=0.5')
         .to('.journey-label span', {
           opacity: 1,
           duration: 0.8,
           ease: 'power2.out',
-        }, '-=0.8')
+        }, '-=0.5')
+        .to('.journey-timeline-line', {
+          scaleY: 1,
+          duration: 1,
+          ease: 'power2.out',
+        }, '-=0.3')
+        .to('.journey-step', {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: 'power3.out',
+        }, '-=0.5')
         .to('.journey-narrative p', {
           opacity: 1,
           y: 0,
@@ -774,64 +816,31 @@ function App() {
         },
       });
 
-      // Animate the background text to slide in
-      gsap.to('.interest-bg-text.top', {
+      // =====================
+      // PROJECTS SECTION
+      // =====================
+      gsap.to('.projects .section-title h2', {
         opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        y: 0,
+        duration: 1,
+        ease: 'power4.out',
         scrollTrigger: {
-          trigger: '.interest-bg-text-section',
-          start: 'top center',
+          trigger: '.projects',
+          start: 'top 70%',
           toggleActions: 'play none none reverse',
         },
       });
 
-      gsap.to('.interest-bg-text.bottom', {
+      gsap.to('.project-card', {
         opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        y: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.interest-bg-text-section',
-          start: 'top center',
+          trigger: '.projects-grid',
+          start: 'top 75%',
           toggleActions: 'play none none reverse',
-        },
-      });
-
-      // Create rotating orb animation
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          scrub: 1,
-          trigger: '.interest-bg-text-section',
-          start: 'top center',
-          end: 'bottom center',
-        },
-      });
-
-      tl.to('#rotating-orb', {
-        rotation: 1080, // 3 full rotations (360 * 3)
-        ease: 'none',
-      });
-
-      // Parallax text for interest section
-      gsap.to('.interest-bg-text.top', {
-        xPercent: 20,
-        scrollTrigger: {
-          trigger: '.interest',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
-
-      gsap.to('.interest-bg-text.bottom', {
-        xPercent: -20,
-        scrollTrigger: {
-          trigger: '.interest',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
         },
       });
 
@@ -939,6 +948,179 @@ function App() {
         }
       });
     });
+
+    // =====================================================
+    // SCROLL-DRIVEN GEOMETRIC MOTION BACKGROUND
+    // All movement is 100% scroll-controlled (scrub: true)
+    // Scroll stops → elements freeze. Scroll up → reverse.
+    // =====================================================
+
+    // --- Layer 1: Far backdrop orbs (slow, large drift) ---
+    const farTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5 // slower scrub = smoother for big orbs
+      }
+    });
+
+    farTl.to('.geo-1', { x: 80, y: -200, scale: 1.15, ease: "none" }, 0);
+    farTl.to('.geo-2', { x: -120, y: 180, scale: 0.9, ease: "none" }, 0);
+    farTl.to('.geo-3', { x: 100, y: -150, scale: 1.1, ease: "none" }, 0);
+    farTl.to('.geo-4', { x: -60, y: -220, scale: 0.85, ease: "none" }, 0);
+
+    // --- Layer 2: Mid shapes (moderate speed, rotation) ---
+    const midTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1
+      }
+    });
+
+    midTl.to('.geo-5',  { x: 150, y: -120, rotation: 90, scale: 1.1, ease: "none" }, 0);
+    midTl.to('.geo-6',  { x: -80, y: -250, scale: 1.05, ease: "none" }, 0);
+    midTl.to('.geo-7',  { x: 100, y: -180, rotation: -60, scale: 0.9, ease: "none" }, 0);
+    midTl.to('.geo-8',  { x: -130, y: -160, scale: 1.15, ease: "none" }, 0);
+    midTl.to('.geo-9',  { x: 90, y: -200, rotation: 120, scale: 0.95, ease: "none" }, 0);
+    midTl.to('.geo-10', { x: -70, y: -140, rotation: -45, scale: 1.08, ease: "none" }, 0);
+
+    // --- Layer 3: Near shapes (faster, more movement, rotation) ---
+    const nearTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.6
+      }
+    });
+
+    nearTl.to('.geo-11', { x: -180, y: -300, rotation: 180, scale: 1.1, ease: "none" }, 0);
+    nearTl.to('.geo-12', { x: 200, y: -250, rotation: -90, scale: 0.9, ease: "none" }, 0);
+    nearTl.to('.geo-13', { x: -100, y: -350, scale: 1.05, ease: "none" }, 0);
+    nearTl.to('.geo-14', { x: 160, y: -280, rotation: 60, scale: 0.95, ease: "none" }, 0);
+    nearTl.to('.geo-15', { x: -140, y: -220, rotation: -120, scale: 1.1, ease: "none" }, 0);
+    nearTl.to('.geo-16', { x: 120, y: -310, rotation: 150, scale: 0.88, ease: "none" }, 0);
+    nearTl.to('.geo-17', { x: -90, y: -260, rotation: -30, scale: 1.12, ease: "none" }, 0);
+    nearTl.to('.geo-18', { x: 70, y: -190, scale: 0.92, ease: "none" }, 0);
+
+    // --- Layer 4: Foreground tiny accents (fastest parallax) ---
+    const fgTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.3
+      }
+    });
+
+    fgTl.to('.geo-19', { x: -250, y: -400, rotation: 360, ease: "none" }, 0);
+    fgTl.to('.geo-20', { x: 300, y: -350, rotation: -180, ease: "none" }, 0);
+    fgTl.to('.geo-21', { x: -200, y: -450, rotation: 270, ease: "none" }, 0);
+    fgTl.to('.geo-22', { x: 180, y: -380, rotation: -360, ease: "none" }, 0);
+    fgTl.to('.geo-23', { x: -270, y: -320, rotation: 180, ease: "none" }, 0);
+    fgTl.to('.geo-24', { x: 220, y: -420, ease: "none" }, 0);
+    fgTl.to('.geo-25', { x: -160, y: -360, rotation: -90, ease: "none" }, 0);
+
+    // --- Rings: slow rotation + drift ---
+    const ringTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.2
+      }
+    });
+
+    ringTl.to('.geo-26', { x: -60, y: -180, rotation: 180, scale: 1.15, ease: "none" }, 0);
+    ringTl.to('.geo-27', { x: 80, y: -220, rotation: -120, scale: 0.9, ease: "none" }, 0);
+    ringTl.to('.geo-28', { x: -100, y: -160, rotation: 90, scale: 1.1, ease: "none" }, 0);
+    ringTl.to('.geo-29', { x: 50, y: -130, rotation: -60, scale: 0.85, ease: "none" }, 0);
+    ringTl.to('.geo-30', { x: -70, y: -200, rotation: 150, scale: 1.05, ease: "none" }, 0);
+
+    // --- Extra scattered accents (diagonal movements) ---
+    const extraTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.8
+      }
+    });
+
+    extraTl.to('.geo-31', { x: -200, y: -280, rotation: 90, scale: 1.1, ease: "none" }, 0);
+    extraTl.to('.geo-32', { x: 150, y: -320, rotation: -60, scale: 0.95, ease: "none" }, 0);
+    extraTl.to('.geo-33', { x: -180, y: -250, rotation: 45, ease: "none" }, 0);
+    extraTl.to('.geo-34', { x: 130, y: -370, ease: "none" }, 0);
+    extraTl.to('.geo-35', { x: -110, y: -300, rotation: -90, scale: 1.08, ease: "none" }, 0);
+
+    // =====================================================
+    // SCROLL-DRIVEN FLOATING ORBS
+    // Persistent orbs visible on every page, move with scroll
+    // Different speeds create depth / parallax
+    // =====================================================
+
+    // Slow layer (large, blurred orbs)
+    const sorbSlowTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 2
+      }
+    });
+
+    sorbSlowTl.to('.sorb-1',  { y: -300, x: 60,   scale: 1.1, ease: "none" }, 0);
+    sorbSlowTl.to('.sorb-3',  { y: -250, x: -80,  scale: 0.9, ease: "none" }, 0);
+    sorbSlowTl.to('.sorb-6',  { y: -350, x: 40,   scale: 1.05, ease: "none" }, 0);
+    sorbSlowTl.to('.sorb-10', { y: -280, x: -50,  scale: 0.95, ease: "none" }, 0);
+
+    // Medium layer
+    const sorbMidTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1
+      }
+    });
+
+    sorbMidTl.to('.sorb-2',  { y: -400, x: -100, scale: 1.08, ease: "none" }, 0);
+    sorbMidTl.to('.sorb-5',  { y: -450, x: 80,   scale: 0.92, ease: "none" }, 0);
+    sorbMidTl.to('.sorb-8',  { y: -380, x: -60,  scale: 1.1, ease: "none" }, 0);
+    sorbMidTl.to('.sorb-9',  { y: -420, x: 100,  scale: 0.95, ease: "none" }, 0);
+    sorbMidTl.to('.sorb-12', { y: -350, x: -70,  scale: 1.05, ease: "none" }, 0);
+
+    // Fast layer (small, sharp orbs)
+    const sorbFastTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.5
+      }
+    });
+
+    sorbFastTl.to('.sorb-4',  { y: -550, x: -120, scale: 1.15, ease: "none" }, 0);
+    sorbFastTl.to('.sorb-7',  { y: -600, x: 90,   ease: "none" }, 0);
+    sorbFastTl.to('.sorb-11', { y: -500, x: -80,  ease: "none" }, 0);
+
+    // Rings — slow drift + rotation
+    const sorbRingTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5
+      }
+    });
+
+    sorbRingTl.to('.sorb-ring-1', { y: -200, x: -40, rotation: 180, scale: 1.1, ease: "none" }, 0);
+    sorbRingTl.to('.sorb-ring-2', { y: -250, x: 60,  rotation: -120, scale: 0.9, ease: "none" }, 0);
+    sorbRingTl.to('.sorb-ring-3', { y: -180, x: -30, rotation: 90,  scale: 1.05, ease: "none" }, 0);
+
   }, [isLoading, isScrolling]);
 
   const scrollToSection = (id: string) => {
@@ -971,6 +1153,78 @@ function App() {
         <div className="abstract-circle"></div>
         <div className="abstract-circle"></div>
         <div className="abstract-circle"></div>
+      </div>
+
+      {/* ============================================
+          Scroll-Driven Geometric Motion Background
+          35 decorative elements across 4 depth layers
+          ============================================ */}
+      <div className="geometric-motion-bg">
+        {/* Layer 1: Far — large blurred orbs (depth backdrop) */}
+        <div className="geo-el geo-orb geo-purple geo-far geo-2xl geo-1"></div>
+        <div className="geo-el geo-orb geo-blue   geo-far geo-xl  geo-2"></div>
+        <div className="geo-el geo-orb geo-cyan   geo-far geo-2xl geo-3"></div>
+        <div className="geo-el geo-orb geo-pink   geo-far geo-xl  geo-4"></div>
+
+        {/* Layer 2: Mid — medium shapes */}
+        <div className="geo-el geo-box geo-grad-pb geo-mid geo-lg geo-5"></div>
+        <div className="geo-el geo-orb geo-purple  geo-mid geo-lg geo-6"></div>
+        <div className="geo-el geo-tri geo-grad-cp geo-mid geo-lg geo-7"></div>
+        <div className="geo-el geo-orb geo-blue    geo-mid geo-md geo-8"></div>
+        <div className="geo-el geo-box geo-grad-cp geo-mid geo-md geo-9"></div>
+        <div className="geo-el geo-diamond geo-grad-pb geo-mid geo-lg geo-10"></div>
+
+        {/* Layer 3: Near — smaller geometric shapes */}
+        <div className="geo-el geo-tri     geo-grad-pb  geo-near geo-md geo-11"></div>
+        <div className="geo-el geo-box     geo-solid-w  geo-near geo-sm geo-12"></div>
+        <div className="geo-el geo-orb     geo-cyan     geo-near geo-md geo-13"></div>
+        <div className="geo-el geo-hex     geo-grad-cp  geo-near geo-md geo-14"></div>
+        <div className="geo-el geo-diamond geo-solid-w  geo-near geo-sm geo-15"></div>
+        <div className="geo-el geo-tri     geo-grad-cp  geo-near geo-sm geo-16"></div>
+        <div className="geo-el geo-box     geo-grad-pb  geo-near geo-md geo-17"></div>
+        <div className="geo-el geo-orb     geo-gray     geo-near geo-sm geo-18"></div>
+
+        {/* Layer 4: Foreground — tiny sharp accents */}
+        <div className="geo-el geo-orb     geo-white geo-fg geo-xs geo-19"></div>
+        <div className="geo-el geo-box     geo-solid-w geo-fg geo-xs geo-20"></div>
+        <div className="geo-el geo-tri     geo-solid-w geo-fg geo-xs geo-21"></div>
+        <div className="geo-el geo-cross   geo-solid-w geo-fg geo-xs geo-22"></div>
+        <div className="geo-el geo-diamond geo-white   geo-fg geo-xs geo-23"></div>
+        <div className="geo-el geo-orb     geo-gray    geo-fg geo-sm geo-24"></div>
+        <div className="geo-el geo-hex     geo-solid-w geo-fg geo-xs geo-25"></div>
+
+        {/* Rings — outlined circles for subtle depth */}
+        <div className="geo-el geo-ring geo-ring-w geo-mid geo-xl  geo-26"></div>
+        <div className="geo-el geo-ring geo-ring-p geo-near geo-lg geo-27"></div>
+        <div className="geo-el geo-ring geo-ring-c geo-mid geo-md  geo-28"></div>
+        <div className="geo-el geo-ring geo-ring-w geo-far geo-2xl geo-29"></div>
+        <div className="geo-el geo-ring geo-ring-p geo-near geo-md geo-30"></div>
+
+        {/* Extra scattered accents */}
+        <div className="geo-el geo-orb  geo-cyan    geo-mid  geo-sm geo-31"></div>
+        <div className="geo-el geo-tri  geo-grad-pb geo-near geo-sm geo-32"></div>
+        <div className="geo-el geo-box  geo-grad-cp geo-fg   geo-xs geo-33"></div>
+        <div className="geo-el geo-orb  geo-white   geo-fg   geo-xs geo-34"></div>
+        <div className="geo-el geo-hex  geo-grad-pb geo-mid  geo-md geo-35"></div>
+      </div>
+
+      {/* Scroll-Driven Floating Orbs — persistent across all pages */}
+      <div className="scroll-orbs">
+        <div className="scroll-orb sorb-1"></div>
+        <div className="scroll-orb sorb-2"></div>
+        <div className="scroll-orb sorb-3"></div>
+        <div className="scroll-orb sorb-4"></div>
+        <div className="scroll-orb sorb-5"></div>
+        <div className="scroll-orb sorb-6"></div>
+        <div className="scroll-orb sorb-7"></div>
+        <div className="scroll-orb sorb-8"></div>
+        <div className="scroll-orb sorb-9"></div>
+        <div className="scroll-orb sorb-10"></div>
+        <div className="scroll-orb sorb-11"></div>
+        <div className="scroll-orb sorb-12"></div>
+        <div className="scroll-orb sorb-ring-1"></div>
+        <div className="scroll-orb sorb-ring-2"></div>
+        <div className="scroll-orb sorb-ring-3"></div>
       </div>
 
       {/* Background Effects */}
@@ -1021,7 +1275,7 @@ function App() {
                   </defs>
                   <text>
                     <textPath href="#textPath">
-                      FRONTEND DEVELOPER • INTERACTIVE WEB • MOTION DESIGN • CREATIVE CODE •
+                      INFORMATICS ENGINEERING STUDENT • FRONTEND DEVELOPER • FIGMA DESIGN • UI/UX DESIGNER •
                     </textPath>
                   </text>
                 </svg>
@@ -1036,10 +1290,10 @@ function App() {
               <h1 className="gradient-text interactive-text">Ghifari</h1>
             </div>
             <div className="hero-subtitle">
-              <p className="interactive-text">Frontend Developer & Interactive Web Enthusiast</p>
+              <p className="interactive-text">informatics engineering students</p>
             </div>
             <div className="hero-tagline">
-              <span className="interactive-text">Building immersive digital experiences through motion and code.</span>
+              <span className="interactive-text">Not graduated yet, but already fighting bugs.</span>
             </div>
             <div className="hero-cta">
               <button className="hero-button gradient-border">
@@ -1093,10 +1347,8 @@ function App() {
               <h2 className="gradient-text">About</h2>
             </div>
             <div className="about-text">
-              <p>A student and developer who enjoys turning ideas into interactive web experiences.</p>
-            </div>
-            <div className="about-description">
-              <p>Passionate about frontend development, animations, and clean user interfaces.</p>
+              <p>An Informatics student passionate about web development, powered by coffee.
+                Currently improving frontend and backend skills with Laravel and Vue through real projects, debugging sessions, and continuous learning.</p>
             </div>
           </div>
         </section>
@@ -1123,13 +1375,8 @@ function App() {
               <h2 className="gradient-text">Education</h2>
             </div>
             <div className="education-main">
-              <h3>Informatics Engineering</h3>
-            </div>
-            <div className="education-sub">
-              <p>Undergraduate Student</p>
-            </div>
-            <div className="education-narrative">
-              <p>Learning how logic, systems, and design come together in software development.</p>
+              <h3>Informatics Engineering'22</h3>
+              <h4>Undergraduate Student at Universitas Muhammadiyah Malang</h4>
             </div>
           </div>
         </section>
@@ -1148,14 +1395,42 @@ function App() {
             <div className="section-title">
               <h2 className="gradient-text">Journey</h2>
             </div>
-            <div className="journey-age">
-              <h3>20s</h3>
-            </div>
             <div className="journey-label">
-              <span>Early Twenties</span>
+              <span>Where It All Started</span>
+            </div>
+            <div className="journey-timeline">
+              <div className="journey-timeline-line"></div>
+              <div className="journey-step">
+                <div className="journey-step-dot"></div>
+                <div className="journey-step-content">
+                  <span className="journey-step-stage">Kindergarten</span>
+                  <h4>TKIT Nurul Ilmi</h4>
+                </div>
+              </div>
+              <div className="journey-step">
+                <div className="journey-step-dot"></div>
+                <div className="journey-step-content">
+                  <span className="journey-step-stage">Elementary School</span>
+                  <h4>SDIT Ihsanul Amal</h4>
+                </div>
+              </div>
+              <div className="journey-step">
+                <div className="journey-step-dot"></div>
+                <div className="journey-step-content">
+                  <span className="journey-step-stage">Junior High School</span>
+                  <h4>SMPIT Ihsanul Amal</h4>
+                </div>
+              </div>
+              <div className="journey-step">
+                <div className="journey-step-dot"></div>
+                <div className="journey-step-content">
+                  <span className="journey-step-stage">Senior High School</span>
+                  <h4>MAN 2 HSU</h4>
+                </div>
+              </div>
             </div>
             <div className="journey-narrative">
-              <p>A phase of exploration, experimentation, and continuous learning.</p>
+              <p>Every chapter shaped the path toward technology and creativity.</p>
             </div>
           </div>
         </section>
@@ -1205,18 +1480,39 @@ function App() {
           </div>
         </section>
 
-        {/* INTEREST - BACKGROUND TEXT PART */}
-        <section className="interest-bg-text-section" id="interest-bg">
-          <div className="interest-bg">
-            <div className="interest-bg-text top gradient-text">Creative</div>
-            <div className="interest-bg-text bottom gradient-text">Passion</div>
-          </div>
-          <div className="rotating-elements-container">
-            <div className="rotating-orb rotating-orb-1" id="rotating-orb-1"></div>
-            <div className="rotating-orb rotating-orb-2" id="rotating-orb-2"></div>
-            <div className="rotating-orb rotating-orb-3" id="rotating-orb-3"></div>
-            <div className="rotating-orb rotating-orb-4" id="rotating-orb-4"></div>
-            <div className="rotating-orb rotating-orb-5" id="rotating-orb-5"></div>
+        {/* PROJECTS */}
+        <section className="projects" id="projects">
+          <div className="projects-content">
+            <div className="section-title">
+              <h2 className="gradient-text">Projects</h2>
+            </div>
+            <div className="projects-grid">
+              {projects.map((project, index) => (
+                <a
+                  key={index}
+                  href={project.link}
+                  className="project-card"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div className="project-card-number">0{index + 1}</div>
+                  <div className="project-card-content">
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <div className="project-card-tech">
+                      {project.tech.map((t, i) => (
+                        <span key={i}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="project-card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -1261,10 +1557,10 @@ function App() {
               <p>Get in touch</p>
             </div>
             <div className="contact-links">
-              <a href="mailto:hello@example.com" className="contact-link">Email</a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="contact-link">GitHub</a>
+              <a href="mailto:imamghifaridimas@gmail.com" className="contact-link">Email</a>
+              <a href="https://github.com/DimasImamGhifari11" target="_blank" rel="noopener noreferrer" className="contact-link">GitHub</a>
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="contact-link">LinkedIn</a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="contact-link">Instagram</a>
+              <a href="https://instagram.com/dimasghfri" target="_blank" rel="noopener noreferrer" className="contact-link">Instagram</a>
             </div>
           </div>
         </section>

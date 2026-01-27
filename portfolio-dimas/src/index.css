@@ -877,6 +877,7 @@ section {
 
 .origin-narrative {
   max-width: 450px;
+  margin: 0 auto; /* Center the narrative text */
 }
 
 .origin-narrative p {
@@ -884,9 +885,10 @@ section {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   font-weight: 300;
   line-height: 1.8;
-  color: var(--color-mid-gray);
+  color: var(--color-cream);
   opacity: 0;
   transform: translateY(30px);
+  text-align: center; /* Center the text alignment */
 }
 
 /* ============================================
@@ -1150,6 +1152,17 @@ section {
   transform: translateY(50px) scale(0.9);
 }
 
+.education-main h4 {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--color-cream);
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
 .education-sub {
   margin-bottom: 3rem;
 }
@@ -1246,23 +1259,8 @@ section {
   text-align: center;
   position: relative;
   z-index: 2;
-}
-
-.journey-age {
-  margin: 2rem 0 1rem;
-  position: relative;
-}
-
-.journey-age h3 {
-  font-family: var(--font-heading);
-  font-size: clamp(8rem, 30vw, 20rem);
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  color: var(--color-white);
-  opacity: 0;
-  transform: scale(0.3);
-  text-shadow: 0 0 100px rgba(255, 255, 255, 0.5);
-  line-height: 0.8;
+  max-width: 600px;
+  width: 100%;
 }
 
 .journey-label {
@@ -1279,9 +1277,127 @@ section {
   opacity: 0;
 }
 
+/* Timeline */
+.journey-timeline {
+  position: relative;
+  padding-left: 2.5rem;
+  margin: 2rem 0 3rem;
+  text-align: left;
+}
+
+/* Vertical line */
+.journey-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Animated line fill (controlled by GSAP) */
+.journey-timeline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-pink), rgba(255, 255, 255, 0.3));
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.journey-timeline-line {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-pink), rgba(255, 255, 255, 0.3));
+  transform-origin: top;
+  transform: scaleY(0);
+  box-shadow: 0 0 15px rgba(255, 0, 119, 0.3);
+}
+
+.journey-step {
+  position: relative;
+  padding: 1.2rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.journey-step-dot {
+  position: absolute;
+  left: -2.5rem;
+  top: 1.5rem;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+  background: var(--color-black);
+  z-index: 2;
+  transition: all 0.4s var(--transition-smooth);
+}
+
+.journey-step-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-pink);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.journey-step:hover .journey-step-dot::after {
+  opacity: 1;
+}
+
+.journey-step:hover .journey-step-dot {
+  border-color: var(--color-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 119, 0.4);
+}
+
+.journey-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.journey-step-stage {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-mega);
+  text-transform: uppercase;
+  color: var(--color-mid-gray);
+}
+
+.journey-step-content h4 {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-cream);
+  transition: color 0.3s var(--transition-smooth);
+}
+
+.journey-step:hover .journey-step-content h4 {
+  color: var(--color-white);
+}
+
 .journey-narrative {
   max-width: 400px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .journey-narrative p {
@@ -1782,97 +1898,198 @@ section {
 }
 
 /* ============================================
-   INTEREST BACKGROUND TEXT SECTION
+   PROJECTS SECTION
    ============================================ */
-.interest-bg-text-section {
+.projects {
   background: var(--color-black);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
+}
+
+.projects-content {
+  max-width: 1000px;
+  width: 100%;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.project-card {
+  position: relative;
+  padding: 2.5rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.5s var(--transition-smooth);
   overflow: hidden;
 }
 
-.interest-bg {
+.project-card::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.interest-bg-text {
-  position: absolute;
-  font-family: var(--font-heading);
-  font-size: clamp(10rem, 30vw, 25rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  z-index: 1;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.04) 0%, transparent 60%);
   opacity: 0;
-  transition: transform 0.8s ease, opacity 0.8s ease;
+  transition: opacity 0.5s var(--transition-smooth);
 }
 
-.interest-bg-text.top {
-  top: 30%;
-  left: -15%;
-  transform: translateX(-150%);
-}
-
-.interest-bg-text.bottom {
-  bottom: 40%;
-  right: -15%;
-  transform: translateX(150%);
-}
-
-.interest-bg-text.animate-in {
+.project-card:hover::before {
   opacity: 1;
-  transform: translateX(0);
 }
 
+.project-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
 
-.rotating-element-container {
+.project-card-number {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--color-mid-gray);
+  letter-spacing: 0.1em;
+}
+
+.project-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  position: relative;
+  z-index: 1;
+}
+
+.project-card-content h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: color 0.4s var(--transition-smooth);
+}
+
+.project-card:hover .project-card-content h3 {
+  color: var(--color-pink);
+}
+
+.project-card-content p {
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-cream);
+}
+
+.project-card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.project-card-tech span {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-light-gray);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.project-card:hover .project-card-tech span {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.project-card-arrow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  width: 300px;
-  height: 300px;
+  top: 2rem;
+  right: 2rem;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  transform: translate(-8px, 8px);
+  transition: all 0.4s var(--transition-smooth);
 }
 
-.rotating-orb {
+.project-card-arrow svg {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--color-pink), transparent 70%);
-  opacity: 0.1;
-  filter: blur(40px);
-  will-change: transform;
+  stroke: var(--color-light-gray);
 }
 
-.bg-text-container {
-  text-align: center;
-  z-index: 2;
-  position: relative;
+.project-card:hover .project-card-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
-@media (max-width: 768px) {
+
+/* ---- Tablet landscape / small desktop ---- */
+@media (max-width: 1024px) {
   section {
-    padding: 6rem 5%;
+    padding: 6rem 6%;
   }
 
+  .hero-circle-1 { width: 600px; height: 600px; }
+  .hero-circle-2 { width: 450px; height: 450px; }
+  .hero-circle-3 { width: 300px; height: 300px; }
+
+  .hero-rotating-text {
+    width: 400px;
+    height: 400px;
+  }
+
+  /* Scale down geometric background sizes */
+  .geo-2xl { width: 220px; height: 220px; }
+  .geo-xl  { width: 150px; height: 150px; }
+  .geo-lg  { width: 90px;  height: 90px; }
+
+  /* Reduce orb sizes */
+  .orb-1 { width: 400px; height: 400px; }
+  .orb-2 { width: 300px; height: 300px; }
+  .orb-3 { width: 350px; height: 350px; }
+  .orb-4 { width: 250px; height: 250px; }
+
+  .origin-narrative,
+  .journey-narrative,
+  .education-narrative {
+    max-width: 400px;
+  }
+
+  .experience-content,
+  .stack-content {
+    max-width: 700px;
+  }
+}
+
+/* ---- Tablet portrait ---- */
+@media (max-width: 768px) {
+  section {
+    padding: 5rem 5%;
+    min-height: auto;
+  }
+
+  /* Navigation */
   .nav-dots {
-    right: 1rem;
-    gap: 0.8rem;
+    right: 0.75rem;
+    gap: 0.7rem;
   }
 
   .nav-dot {
@@ -1884,44 +2101,530 @@ section {
     display: none;
   }
 
-  .interest-list {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-links {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
+  /* Hide custom cursor on touch devices */
   .cursor,
   .cursor-dot,
   .cursor-trail {
     display: none;
   }
 
+  /* Hero section */
   .hero-circle,
   .hero-rotating-text {
     display: none;
   }
 
+  .hero-name h1 {
+    font-size: clamp(3rem, 13vw, 7rem);
+    line-height: 0.9;
+  }
+
+  .hero-subtitle {
+    margin-top: 2rem;
+  }
+
+  .hero-tagline {
+    max-width: 350px;
+  }
+
+  .hero-scroll-hint {
+    bottom: 3rem;
+  }
+
+  .hero-cta {
+    margin-top: 2rem;
+  }
+
+  /* Origin */
+  .origin-place h2 {
+    font-size: clamp(2rem, 7vw, 4rem);
+  }
+
+  .origin-date h3 {
+    font-size: clamp(1.2rem, 4vw, 2.5rem);
+  }
+
+  .origin-date {
+    margin-bottom: 2.5rem;
+  }
+
+  /* About */
+  .about-content {
+    max-width: 100%;
+  }
+
+  .section-title {
+    margin-bottom: 2.5rem;
+  }
+
+  .about-marquee span {
+    font-size: clamp(6rem, 20vw, 15rem);
+  }
+
+  /* Education */
+  .education-path-left { left: 5%; }
+  .education-path-right { right: 5%; }
+  .education-dot-left { left: calc(5% - 6px); }
+  .education-dot-right { right: calc(5% - 6px); }
+
+  .education-main h3 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  /* Journey */
+  .journey-ring-1 { width: 200px; height: 200px; }
+  .journey-ring-2 { width: 350px; height: 350px; }
+  .journey-ring-3 { width: 500px; height: 500px; }
+
+  .journey-timeline {
+    padding-left: 2rem;
+  }
+
+  /* Experience */
+  .experience-item {
+    padding: 1.8rem 0;
+  }
+
+  .experience-item h4 {
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+  }
+
+  .experience-item-arrow {
+    display: none;
+  }
+
+  /* Interest */
+  .interest-list {
+    grid-template-columns: 1fr;
+  }
+
+  .interest-item {
+    padding: 1.5rem 1.2rem;
+  }
+
+  /* Projects - single column on tablet */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    padding: 2rem 1.5rem;
+  }
+
+  /* Scroll orbs - reduce on tablet */
+  .sorb-3, .sorb-6, .sorb-10 {
+    display: none;
+  }
+
+  .sorb-ring-3 {
+    display: none;
+  }
+
+  /* Contact */
+  .contact-links {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-main h2 {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+  }
+
+  /* Floating orbs - smaller, less blur */
   .floating-orbs .orb {
-    filter: blur(60px);
+    filter: blur(50px);
+  }
+
+  .orb-1 { width: 300px; height: 300px; }
+  .orb-2 { width: 200px; height: 200px; }
+  .orb-3 { width: 250px; height: 250px; }
+  .orb-4 { width: 180px; height: 180px; }
+
+  /* Geometric background - reduce count & sizes */
+  .geo-2xl { width: 150px; height: 150px; }
+  .geo-xl  { width: 100px; height: 100px; }
+  .geo-lg  { width: 60px;  height: 60px; }
+  .geo-md  { width: 45px;  height: 45px; }
+
+  /* Hide some elements on smaller screens to reduce clutter */
+  .geo-31, .geo-32, .geo-33, .geo-34, .geo-35 {
+    display: none;
+  }
+
+  /* Reduce abstract circles */
+  .abstract-circle:nth-child(4),
+  .abstract-circle:nth-child(5) {
+    display: none;
+  }
+
+  .abstract-circle:nth-child(1) { width: 200px; height: 200px; }
+  .abstract-circle:nth-child(2) { width: 150px; height: 150px; }
+  .abstract-circle:nth-child(3) { width: 250px; height: 250px; }
+
+
+  /* Footer */
+  .footer {
+    padding: 3rem 5%;
   }
 }
 
+/* ---- Small mobile ---- */
 @media (max-width: 480px) {
-  .hero-name h1 {
-    font-size: clamp(2.5rem, 15vw, 5rem);
+  section {
+    padding: 4rem 4%;
+    min-height: auto;
   }
 
-  .journey-age h3 {
-    font-size: clamp(5rem, 30vw, 10rem);
+  /* Hero */
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-name h1 {
+    font-size: clamp(2.5rem, 14vw, 4.5rem);
+    line-height: 0.9;
+  }
+
+  .hero-name h1:nth-child(2) {
+    font-size: clamp(2rem, 11vw, 3.5rem);
+  }
+
+  .hero-name h1:nth-child(3) {
+    font-size: clamp(2.2rem, 12vw, 4rem);
+  }
+
+  .hero-subtitle p {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+  }
+
+  .hero-tagline span {
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
+  }
+
+  .hero-button {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.85rem;
+  }
+
+  /* Section titles */
+  .section-title h2 {
+    font-size: clamp(1.8rem, 8vw, 3rem);
+  }
+
+  .section-title {
+    margin-bottom: 2rem;
+  }
+
+  /* Origin */
+  .origin-label span {
+    font-size: 0.65rem;
+  }
+
+  .origin-place h2 {
+    font-size: clamp(1.8rem, 8vw, 3rem);
+  }
+
+  .origin-date h3 {
+    font-size: clamp(1rem, 4vw, 2rem);
+  }
+
+  .origin-date {
+    margin-bottom: 2rem;
+  }
+
+  .origin-narrative p,
+  .education-narrative p,
+  .journey-narrative p,
+  .experience-narrative p,
+  .interest-narrative p {
+    font-size: clamp(0.8rem, 3.5vw, 0.95rem);
+    line-height: 1.7;
+  }
+
+  /* About */
+  .about-text p {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+  }
+
+  .about-description p {
+    font-size: clamp(0.8rem, 3.5vw, 0.95rem);
+  }
+
+  .about-marquee span {
+    font-size: clamp(4rem, 18vw, 10rem);
+  }
+
+  /* Education */
+  .education-path-left { left: 2%; }
+  .education-path-right { right: 2%; }
+  .education-dot-left { left: calc(2% - 6px); }
+  .education-dot-right { right: calc(2% - 6px); }
+
+  .education-main h3 {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+  }
+
+  .education-sub p {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+  }
+
+  .education-floating {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Journey */
+  .journey-timeline {
+    padding-left: 1.5rem;
+  }
+
+  .journey-step-content h4 {
+    font-size: 1rem;
+  }
+
+  .journey-step-stage {
+    font-size: 0.65rem;
+  }
+
+  .journey-ring-1 { width: 150px; height: 150px; }
+  .journey-ring-2 { width: 250px; height: 250px; }
+  .journey-ring-3 { width: 350px; height: 350px; }
+
+  /* Experience */
+  .experience-item {
+    padding: 1.5rem 0;
   }
 
   .experience-item-inner {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .experience-item h4 {
+    font-size: clamp(0.95rem, 4vw, 1.3rem);
+  }
+
+  .experience-item-number {
+    font-size: 0.75rem;
+  }
+
+  /* Stack */
+  .stack-item {
+    margin-bottom: 2rem;
+  }
+
+  .stack-item h4 {
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
+  }
+
+  /* Interest */
+  .interest {
+    padding: 5rem 4%;
+  }
+
+  .interest-item {
+    padding: 1.2rem 1rem;
     gap: 1rem;
+  }
+
+  .interest-item-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .interest-item-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .interest-item h4 {
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
+  }
+
+  /* Projects - smaller padding on mobile */
+  .project-card {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .project-card-content h3 {
+    font-size: clamp(0.95rem, 4vw, 1.2rem);
+  }
+
+  .project-card-arrow {
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Scroll orbs - hide most on mobile */
+  .sorb-2, .sorb-3, .sorb-5, .sorb-6, .sorb-8, .sorb-10, .sorb-12 {
+    display: none;
+  }
+
+  .sorb-ring-1, .sorb-ring-2, .sorb-ring-3 {
+    display: none;
+  }
+
+  .sorb-1  { width: 120px; height: 120px; }
+  .sorb-4  { width: 60px;  height: 60px; }
+  .sorb-7  { width: 50px;  height: 50px; }
+  .sorb-9  { width: 70px;  height: 70px; }
+  .sorb-11 { width: 40px;  height: 40px; }
+
+  /* Contact */
+  .contact-main h2 {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .contact-sub p {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+  }
+
+  .contact-sub {
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-link {
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
+    padding: 0.8rem 1.5rem;
+  }
+
+  /* Floating orbs - even smaller */
+  .orb-1 { width: 200px; height: 200px; }
+  .orb-2 { width: 150px; height: 150px; }
+  .orb-3 { width: 180px; height: 180px; }
+  .orb-4 { display: none; }
+
+  .floating-orbs .orb {
+    filter: blur(40px);
+  }
+
+  /* Geometric bg - further reduce for performance */
+  .geo-2xl { width: 100px; height: 100px; }
+  .geo-xl  { width: 70px;  height: 70px; }
+  .geo-lg  { width: 45px;  height: 45px; }
+  .geo-md  { width: 30px;  height: 30px; }
+  .geo-sm  { width: 20px;  height: 20px; }
+  .geo-xs  { width: 12px;  height: 12px; }
+
+  /* Hide more geo elements on mobile */
+  .geo-19, .geo-20, .geo-21, .geo-22, .geo-23, .geo-24, .geo-25,
+  .geo-26, .geo-27, .geo-28, .geo-29, .geo-30,
+  .geo-31, .geo-32, .geo-33, .geo-34, .geo-35 {
+    display: none;
+  }
+
+  /* Reduce abstract circles */
+  .abstract-circle:nth-child(3),
+  .abstract-circle:nth-child(4),
+  .abstract-circle:nth-child(5) {
+    display: none;
+  }
+
+  .abstract-circle:nth-child(1) { width: 150px; height: 150px; }
+  .abstract-circle:nth-child(2) { width: 100px; height: 100px; }
+
+
+  /* Loading screen */
+  .loading-logo {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .loading-counter {
+    font-size: clamp(3rem, 15vw, 6rem);
+  }
+
+  .loading-bar-container {
+    width: 200px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 2.5rem 4%;
+  }
+
+  .footer p {
+    font-size: 0.65rem;
+  }
+}
+
+/* ---- Very small screens ---- */
+@media (max-width: 360px) {
+  section {
+    padding: 3.5rem 3%;
+  }
+
+  .hero-name h1 {
+    font-size: clamp(2rem, 13vw, 3.5rem);
+  }
+
+  .section-title h2 {
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+  }
+
+  .journey-timeline {
+    padding-left: 1rem;
+  }
+
+  .journey-step-content h4 {
+    font-size: 0.9rem;
+  }
+
+  /* Hide all geometric elements for performance */
+  .geometric-motion-bg {
+    display: none;
+  }
+
+  .abstract-circles {
+    display: none;
+  }
+}
+
+/* ---- Landscape mobile ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  section {
+    padding: 3rem 5%;
+    min-height: auto;
+  }
+
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-name h1 {
+    font-size: clamp(2rem, 8vw, 4rem);
+    line-height: 0.85;
+  }
+
+  .hero-subtitle {
+    margin-top: 1rem;
+  }
+
+  .hero-tagline {
+    margin-top: 0.8rem;
+  }
+
+  .hero-cta {
+    margin-top: 1.5rem;
+  }
+
+  .hero-scroll-hint {
+    bottom: 1.5rem;
+  }
+
+  .journey-timeline {
+    padding-left: 1rem;
+  }
+
+  .nav-dots {
+    gap: 0.5rem;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
   }
 }
 
@@ -2178,3 +2881,217 @@ section {
   overflow: hidden;
   margin-right: 0.25em;
 }
+
+/* ============================================
+   SCROLL-DRIVEN GEOMETRIC MOTION BACKGROUND
+   Premium GSAP showcase-level decorative layer
+   ============================================ */
+.geometric-motion-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* --- Base element --- */
+.geo-el {
+  position: absolute;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* --- Circles: filled orbs --- */
+.geo-orb {
+  border-radius: 50%;
+}
+
+/* --- Circles: ring outlines --- */
+.geo-ring {
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* --- Squares / Rectangles --- */
+.geo-box {
+  border-radius: 2px;
+}
+
+/* --- Triangles via clip-path --- */
+.geo-tri {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* --- Diamond --- */
+.geo-diamond {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+/* --- Cross / Plus --- */
+.geo-cross {
+  clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%);
+}
+
+/* --- Hexagon --- */
+.geo-hex {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+/* =========================
+   COLOR VARIANTS
+   ========================= */
+
+/* Purple gradient */
+.geo-purple { background: radial-gradient(circle, rgba(139,92,246,0.6) 0%, rgba(139,92,246,0) 70%); }
+/* Blue gradient */
+.geo-blue { background: radial-gradient(circle, rgba(59,130,246,0.6) 0%, rgba(59,130,246,0) 70%); }
+/* Cyan gradient */
+.geo-cyan { background: radial-gradient(circle, rgba(6,182,212,0.6) 0%, rgba(6,182,212,0) 70%); }
+/* White / light */
+.geo-white { background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%); }
+/* Gray */
+.geo-gray { background: radial-gradient(circle, rgba(120,120,120,0.4) 0%, rgba(120,120,120,0) 70%); }
+/* Pink accent */
+.geo-pink { background: radial-gradient(circle, rgba(236,72,153,0.5) 0%, rgba(236,72,153,0) 70%); }
+/* Purple-blue gradient (for boxes/tris) */
+.geo-grad-pb { background: linear-gradient(135deg, rgba(139,92,246,0.35), rgba(59,130,246,0.2)); }
+/* Cyan-purple gradient */
+.geo-grad-cp { background: linear-gradient(135deg, rgba(6,182,212,0.3), rgba(139,92,246,0.15)); }
+/* White-gray solid */
+.geo-solid-w { background: rgba(255,255,255,0.12); }
+/* Ring stroke variants */
+.geo-ring-w { border: 1px solid rgba(255,255,255,0.08); }
+.geo-ring-p { border: 1px solid rgba(139,92,246,0.12); }
+.geo-ring-c { border: 1px solid rgba(6,182,212,0.1); }
+
+/* =========================
+   DEPTH LAYERS (blur + opacity)
+   ========================= */
+
+/* Far layer - most blurred, very faint */
+.geo-far {
+  opacity: 0.05;
+  filter: blur(30px);
+}
+/* Mid layer */
+.geo-mid {
+  opacity: 0.1;
+  filter: blur(15px);
+}
+/* Near layer - sharper, slightly brighter */
+.geo-near {
+  opacity: 0.18;
+  filter: blur(6px);
+}
+/* Foreground accent - sharpest */
+.geo-fg {
+  opacity: 0.25;
+  filter: blur(2px);
+}
+
+/* =========================
+   SIZE CLASSES
+   ========================= */
+.geo-xs  { width: 20px;  height: 20px; }
+.geo-sm  { width: 40px;  height: 40px; }
+.geo-md  { width: 70px;  height: 70px; }
+.geo-lg  { width: 120px; height: 120px; }
+.geo-xl  { width: 200px; height: 200px; }
+.geo-2xl { width: 320px; height: 320px; }
+
+/* =========================
+   INDIVIDUAL POSITIONS
+   35 elements spread across viewport
+   ========================= */
+
+/* --- Layer 1: Far / Large orbs (depth backdrop) --- */
+.geo-1  { top: 5%;   left: 8%; }
+.geo-2  { top: 15%;  right: 5%; }
+.geo-3  { bottom: 10%; left: 25%; }
+.geo-4  { top: 45%;  right: 12%; }
+
+/* --- Layer 2: Mid / Medium shapes --- */
+.geo-5  { top: 12%;  left: 55%; }
+.geo-6  { top: 65%;  left: 8%; }
+.geo-7  { bottom: 25%; right: 18%; }
+.geo-8  { top: 30%;  left: 3%; }
+.geo-9  { top: 75%;  right: 8%; }
+.geo-10 { bottom: 5%;  left: 50%; }
+
+/* --- Layer 3: Near / Smaller geometric --- */
+.geo-11 { top: 8%;   left: 35%; }
+.geo-12 { top: 22%;  right: 30%; }
+.geo-13 { top: 50%;  left: 18%; }
+.geo-14 { bottom: 20%; left: 42%; }
+.geo-15 { top: 38%;  right: 5%; }
+.geo-16 { bottom: 35%; right: 30%; }
+.geo-17 { top: 60%;  left: 65%; }
+.geo-18 { bottom: 45%; left: 5%; }
+
+/* --- Layer 4: Foreground accents (tiny, sharp) --- */
+.geo-19 { top: 18%;  left: 22%; }
+.geo-20 { top: 42%;  left: 48%; }
+.geo-21 { top: 70%;  right: 22%; }
+.geo-22 { bottom: 15%; left: 12%; }
+.geo-23 { top: 28%;  right: 42%; }
+.geo-24 { bottom: 40%; right: 10%; }
+.geo-25 { top: 55%;  left: 38%; }
+
+/* --- Rings (outlines) --- */
+.geo-26 { top: 20%;  left: 70%; }
+.geo-27 { top: 80%;  left: 30%; }
+.geo-28 { bottom: 30%; right: 25%; }
+.geo-29 { top: 10%;  right: 15%; }
+.geo-30 { top: 50%;  left: 80%; }
+
+/* --- Extra scattered accents --- */
+.geo-31 { top: 35%;  left: 90%; }
+.geo-32 { bottom: 8%;  right: 45%; }
+.geo-33 { top: 88%;  left: 60%; }
+.geo-34 { top: 3%;   left: 45%; }
+.geo-35 { bottom: 50%; left: 15%; }
+
+/* ============================================
+   SCROLL-DRIVEN FLOATING ORBS
+   Persistent orbs that drift with scroll
+   across the entire page
+   ============================================ */
+.scroll-orbs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.scroll-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Soft gradient orbs */
+.sorb-1  { width: 180px; height: 180px; top: 8%;   left: 5%;   background: radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%); filter: blur(25px); opacity: 0.15; }
+.sorb-2  { width: 120px; height: 120px; top: 20%;  right: 10%; background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);  filter: blur(20px); opacity: 0.12; }
+.sorb-3  { width: 250px; height: 250px; top: 35%;  left: 60%;  background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%);   filter: blur(35px); opacity: 0.08; }
+.sorb-4  { width: 90px;  height: 90px;  top: 55%;  left: 15%;  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(12px); opacity: 0.18; }
+.sorb-5  { width: 160px; height: 160px; top: 70%;  right: 20%; background: radial-gradient(circle, rgba(236,72,153,0.25) 0%, transparent 70%); filter: blur(22px); opacity: 0.1; }
+.sorb-6  { width: 200px; height: 200px; top: 85%;  left: 40%;  background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);  filter: blur(30px); opacity: 0.1; }
+.sorb-7  { width: 70px;  height: 70px;  top: 15%;  left: 75%;  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%); filter: blur(8px);  opacity: 0.2; }
+.sorb-8  { width: 140px; height: 140px; top: 45%;  right: 5%;  background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%); filter: blur(18px); opacity: 0.12; }
+.sorb-9  { width: 100px; height: 100px; top: 30%;  left: 30%;  background: radial-gradient(circle, rgba(6,182,212,0.3) 0%, transparent 70%);  filter: blur(15px); opacity: 0.15; }
+.sorb-10 { width: 220px; height: 220px; top: 60%;  left: 70%;  background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%); filter: blur(30px); opacity: 0.08; }
+.sorb-11 { width: 60px;  height: 60px;  top: 80%;  left: 10%;  background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%); filter: blur(6px);  opacity: 0.22; }
+.sorb-12 { width: 130px; height: 130px; top: 5%;   left: 45%;  background: radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%);  filter: blur(20px); opacity: 0.1; }
+
+/* Outlined rings that float */
+.sorb-ring-1 { width: 150px; height: 150px; top: 25%; left: 85%;  border: 1px solid rgba(255,255,255,0.06); opacity: 0.3; filter: blur(1px); }
+.sorb-ring-2 { width: 100px; height: 100px; top: 50%; left: 2%;   border: 1px solid rgba(139,92,246,0.1);   opacity: 0.25; filter: blur(1px); }
+.sorb-ring-3 { width: 200px; height: 200px; top: 75%; right: 30%; border: 1px solid rgba(6,182,212,0.08);   opacity: 0.2; filter: blur(2px); }

@@ -1,75 +1,153 @@
-# React + TypeScript + Vite
+# Dimas Imam Ghifari - Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my personal portfolio website! This is a modern, interactive showcase of my work as a Frontend Developer & Interactive Web Enthusiast, built with cutting-edge technologies.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Modern UI/UX Design**: Clean, responsive interface with smooth animations
+- **Interactive Elements**: Engaging user experience with motion and code
+- **Performance Optimized**: Fast loading times and efficient resource usage
+- **Responsive Design**: Works seamlessly across all devices
+- **SEO Friendly**: Proper meta tags and semantic HTML
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Framework**: React (v19.2.0)
+- **Runtime**: TypeScript
+- **Build Tool**: Vite
+- **Styling**: CSS with modern techniques
+- **Deployment**: Vercel
 
-Note: This will impact Vite dev & build performances.
+## 📋 Description
 
-## Expanding the ESLint configuration
+Dimas Imam Ghifari - Frontend Developer & Interactive Web Enthusiast. Building immersive digital experiences through motion and code.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This portfolio showcases my expertise in creating engaging web experiences with a focus on:
+- Modern frontend development practices
+- Interactive web elements
+- Motion design and animation
+- Responsive and accessible interfaces
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🏗️ Project Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+portfolio-dimas/
+├── public/                 # Static assets
+│   └── icon.svg           # Website favicon
+├── src/                   # Source code
+│   ├── components/        # Reusable React components
+│   ├── pages/            # Page components
+│   ├── assets/           # Images, icons, and other assets
+│   ├── hooks/            # Custom React hooks
+│   ├── utils/            # Utility functions
+│   ├── types/            # TypeScript type definitions
+│   ├── styles/           # Global styles
+│   ├── App.tsx          # Main application component
+│   └── main.tsx         # Application entry point
+├── index.html            # Main HTML template
+├── package.json          # Project dependencies and scripts
+├── tsconfig.json         # TypeScript configuration
+├── vite.config.ts        # Vite build configuration
+└── README.md            # This file
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Production Dependencies
+- `react`: ^19.2.0
+- `react-dom`: ^19.2.0
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Development Dependencies
+- `@types/react`: ^19.2.5
+- `@types/react-dom`: ^19.2.3
+- `@vitejs/plugin-react`: ^5.1.1
+- `typescript`: ~5.9.3
+- `vite`: npm:rolldown-vite@7.2.5
+- `eslint`: ^9.39.1
+- And more...
+
+## 🔧 Setup Instructions
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd portfolio-dimas
 ```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+### Available Scripts
+
+- `npm run dev` - Starts the development server with hot reloading
+- `npm run build` - Creates a production-ready build
+- `npm run lint` - Runs ESLint to check for code issues
+- `npm run preview` - Locally previews the production build
+
+## 🎨 Design Philosophy
+
+This portfolio emphasizes:
+- **Clean Aesthetics**: Minimalist design with thoughtful spacing
+- **Interactive Elements**: Engaging user interactions and micro-animations
+- **Performance**: Optimized loading and smooth animations
+- **Accessibility**: Following WCAG guidelines for inclusive design
+- **Responsiveness**: Seamless experience across all device sizes
+
+## 🌐 Deployment
+
+This project is configured for deployment on Vercel. The `vercel.json` file in the parent directory contains the deployment configuration.
+
+To deploy:
+1. Push your code to a Git repository
+2. Connect your repository to Vercel
+3. Vercel will automatically build and deploy your site
+
+## 🤝 Contributing
+
+While this is a personal portfolio, contributions are welcome for bug fixes or improvements:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 🐛 Known Issues
+
+- Some older browsers may not support all modern CSS features
+- SVG favicons may not display correctly in all browsers (fallback recommended)
+
+## 📞 Contact
+
+Feel free to reach out if you have any questions, suggestions, or opportunities:
+- Email: [Your email address]
+- LinkedIn: [Your LinkedIn profile]
+- GitHub: [Your GitHub profile]
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Thanks to the React and Vite communities for the excellent tools
+- Inspired by modern web design trends and best practices
+- Special thanks to all the open-source contributors whose work made this project possible
+
+---
+
+Made with ❤️ by Dimas Imam Ghifari

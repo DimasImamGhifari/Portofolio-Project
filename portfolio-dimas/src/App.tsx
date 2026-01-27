@@ -62,7 +62,7 @@ const projects = [
 
 const interests = [
   { title: 'Web Development', icon: 'globe' },
-  { title: 'Motorcycle', icon: 'scroll' },
+  { title: 'Motorcycle', icon: 'motorcycle' },
   { title: 'Film', icon: 'film' },
   { title: 'Game', icon: 'gamepad' },
 ];

@@ -776,7 +776,7 @@ section {
    SECTION 2 - ORIGIN
    ============================================ */
 .origin {
-  background: var(--color-dark);
+  background: var(--color-black);
   position: relative;
   overflow: hidden;
 }
@@ -890,7 +890,7 @@ section {
    SECTION 3 - ABOUT
    ============================================ */
 .about {
-  background: var(--color-dark-gray);
+  background: var(--color-black);
   position: relative;
 }
 
@@ -990,7 +990,7 @@ section {
    SECTION 4 - EDUCATION
    ============================================ */
 .education {
-  background: var(--color-dark);
+  background: var(--color-black);
   position: relative;
 }
 
@@ -1002,11 +1002,19 @@ section {
   height: 100%;
 }
 
-.education-path {
+/* Left and right paths */
+.education-path-left {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 15%;
+  width: 2px;
+  height: 100%;
+}
+
+.education-path-right {
+  position: absolute;
+  top: 0;
+  right: 15%;
   width: 2px;
   height: 100%;
 }
@@ -1026,14 +1034,34 @@ section {
   left: 0;
   width: 100%;
   height: 0%;
-  background: var(--color-white);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  background: var(--color-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 119, 0.5);
+}
+
+.education-path-fill-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0%;
+  background: var(--color-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 119, 0.5);
+  z-index: 3;
+}
+
+.education-path-fill-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 0%;
+  background: var(--color-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 119, 0.5);
+  z-index: 3;
 }
 
 .education-dot {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   width: 12px;
   height: 12px;
   border: 2px solid var(--color-white);
@@ -1043,14 +1071,66 @@ section {
   z-index: 5;
 }
 
-.education-dot-1 { top: 30%; }
+.education-dot-left {
+  left: calc(15% - 6px);
+  transform: translateX(0);
+}
+
+.education-dot-right {
+  right: calc(15% - 6px);
+  transform: translateX(0);
+}
+
+.education-dot-1 { top: 25%; }
 .education-dot-2 { top: 50%; }
-.education-dot-3 { top: 70%; }
+.education-dot-3 { top: 75%; }
+
+/* Floating elements for education section */
+.education-floating {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-pink), transparent 70%);
+  opacity: 0.1;
+  filter: blur(20px);
+  z-index: 1;
+}
+
+.education-floating-1 {
+  top: 15%;
+  left: 25%;
+  animation: floatAnimation 15s ease-in-out infinite;
+}
+
+.education-floating-2 {
+  top: 65%;
+  right: 25%;
+  animation: floatAnimation 18s ease-in-out infinite 2s;
+}
 
 .education-content {
   position: relative;
   text-align: center;
   z-index: 2;
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(20px, 20px) rotate(90deg);
+  }
+  50% {
+    transform: translate(0, 40px) rotate(180deg);
+  }
+  75% {
+    transform: translate(-20px, 20px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
 }
 
 .education-main {
@@ -1215,7 +1295,7 @@ section {
    SECTION 6 - EXPERIENCE
    ============================================ */
 .experience {
-  background: var(--color-dark-gray);
+  background: var(--color-black);
 }
 
 .experience-content {
@@ -1342,7 +1422,7 @@ section {
    SECTION 7 - STACK / SKILLS
    ============================================ */
 .stack {
-  background: var(--color-dark);
+  background: var(--color-black);
 }
 
 .stack-content {

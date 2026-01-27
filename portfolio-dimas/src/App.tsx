@@ -522,7 +522,17 @@ function App() {
       // =====================
       // EDUCATION SECTION
       // =====================
-      gsap.to('.education-path-fill', {
+      gsap.to('.education-path-fill-left', {
+        height: '100%',
+        scrollTrigger: {
+          trigger: '.education',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
+
+      gsap.to('.education-path-fill-right', {
         height: '100%',
         scrollTrigger: {
           trigger: '.education',
@@ -1034,13 +1044,19 @@ function App() {
         {/* EDUCATION */}
         <section className="education" id="education">
           <div className="education-bg">
-            <div className="education-path">
+            <div className="education-path-left">
               <div className="education-path-bg"></div>
-              <div className="education-path-fill"></div>
+              <div className="education-path-fill education-path-fill-left"></div>
             </div>
-            <div className="education-dot education-dot-1"></div>
-            <div className="education-dot education-dot-2"></div>
-            <div className="education-dot education-dot-3"></div>
+            <div className="education-path-right">
+              <div className="education-path-bg"></div>
+              <div className="education-path-fill education-path-fill-right"></div>
+            </div>
+            <div className="education-dot education-dot-left education-dot-1"></div>
+            <div className="education-dot education-dot-right education-dot-2"></div>
+            <div className="education-dot education-dot-left education-dot-3"></div>
+            <div className="education-floating education-floating-1"></div>
+            <div className="education-floating education-floating-2"></div>
           </div>
           <div className="education-content">
             <div className="section-title">

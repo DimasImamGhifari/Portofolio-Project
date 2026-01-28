@@ -1390,7 +1390,8 @@ function App() {
               ))}
             </ul>
             <div className="interest-narrative">
-              <p>Inspired by immersive worlds, games, and cinematic experiences.</p>
+              <p>I am interested in web development, where I enjoy building functional and responsive websites. I also have a strong interest in UI design, focusing on creating clean and user-friendly interfaces.
+Outside of coding, I enjoy exploring games and motorcycles, which inspire my creativity, problem-solving skills, and attention to detail.</p>
             </div>
           </div>
         </section>
@@ -1423,7 +1424,7 @@ function App() {
         </section>
 
         <footer className="footer">
-          <p>&copy; 2024 Dimas Imam Ghifari. All rights reserved.</p>
+          <p>&copy; 2026 Dimas Imam Ghifari. All rights reserved.</p>
         </footer>
       </main>
     </>

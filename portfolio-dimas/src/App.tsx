@@ -927,201 +927,78 @@ function App() {
       document.body.classList.remove('scrolling');
     }
 
-    // Add parallax effect to existing floating orbs
-    const orbs = document.querySelectorAll('.orb');
-    orbs.forEach((orb, index) => {
-      const speed = (index + 1) * 0.02; // Different speed for each orb
-
-      // Create scroll trigger for parallax effect
-      ScrollTrigger.create({
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.5, // Smooth scrubbing
-        onUpdate: (self) => {
-          // Calculate offset based on scroll progress and speed
-          const offset = self.progress * 100 * speed;
-          gsap.set(orb, {
-            y: `-=${offset * 0.5}`, // Move opposite direction of scroll
-            x: `+=${offset * 0.2}`, // Small horizontal movement
-          });
-        }
-      });
-    });
-
     // =====================================================
-    // SCROLL-DRIVEN GEOMETRIC MOTION BACKGROUND
-    // All movement is 100% scroll-controlled (scrub: true)
-    // Scroll stops → elements freeze. Scroll up → reverse.
+    // CINEMATIC SCROLL-DRIVEN MOTION SYSTEM
+    // Single master timeline — 100% scroll-controlled
+    // Scroll stops → all freeze. Scroll up → perfect reverse.
+    // Heavy, cinematic, smooth parallax depth illusion.
     // =====================================================
 
-    // --- Layer 1: Far backdrop orbs (slow, large drift) ---
-    const farTl = gsap.timeline({
+    const masterTl = gsap.timeline({
       scrollTrigger: {
         trigger: "body",
         start: "top top",
         end: "bottom bottom",
-        scrub: 1.5 // slower scrub = smoother for big orbs
+        scrub: 1.8, // heavy, cinematic scrub
       }
     });
 
-    farTl.to('.geo-1', { x: 80, y: -200, scale: 1.15, ease: "none" }, 0);
-    farTl.to('.geo-2', { x: -120, y: 180, scale: 0.9, ease: "none" }, 0);
-    farTl.to('.geo-3', { x: 100, y: -150, scale: 1.1, ease: "none" }, 0);
-    farTl.to('.geo-4', { x: -60, y: -220, scale: 0.85, ease: "none" }, 0);
+    // --- Layer 1: Far backdrop orbs — slowest, heaviest drift ---
+    masterTl.to('.geo-1',  { x: 120,  y: -350, scale: 1.25, ease: "none" }, 0);
+    masterTl.to('.geo-2',  { x: -180, y: 280,  scale: 0.8,  ease: "none" }, 0);
+    masterTl.to('.geo-3',  { x: 160,  y: -280, scale: 1.2,  ease: "none" }, 0);
+    masterTl.to('.geo-4',  { x: -100, y: -400, scale: 0.75, ease: "none" }, 0);
 
-    // --- Layer 2: Mid shapes (moderate speed, rotation) ---
-    const midTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1
-      }
-    });
+    // --- Layer 2: Mid shapes — moderate drift + rotation ---
+    masterTl.to('.geo-5',  { x: 220,  y: -200, rotation: 120,  scale: 1.15, ease: "none" }, 0);
+    masterTl.to('.geo-6',  { x: -140, y: -420, scale: 1.1,  ease: "none" }, 0);
+    masterTl.to('.geo-7',  { x: 180,  y: -300, rotation: -90,  scale: 0.85, ease: "none" }, 0);
+    masterTl.to('.geo-8',  { x: -200, y: -260, scale: 1.2,  ease: "none" }, 0);
+    masterTl.to('.geo-9',  { x: 140,  y: -350, rotation: 150,  scale: 0.9,  ease: "none" }, 0);
+    masterTl.to('.geo-10', { x: -110, y: -240, rotation: -60,  scale: 1.12, ease: "none" }, 0);
 
-    midTl.to('.geo-5',  { x: 150, y: -120, rotation: 90, scale: 1.1, ease: "none" }, 0);
-    midTl.to('.geo-6',  { x: -80, y: -250, scale: 1.05, ease: "none" }, 0);
-    midTl.to('.geo-7',  { x: 100, y: -180, rotation: -60, scale: 0.9, ease: "none" }, 0);
-    midTl.to('.geo-8',  { x: -130, y: -160, scale: 1.15, ease: "none" }, 0);
-    midTl.to('.geo-9',  { x: 90, y: -200, rotation: 120, scale: 0.95, ease: "none" }, 0);
-    midTl.to('.geo-10', { x: -70, y: -140, rotation: -45, scale: 1.08, ease: "none" }, 0);
+    // --- Layer 3: Near shapes — faster drift, more rotation ---
+    masterTl.to('.geo-11', { x: -280, y: -500, rotation: 210,  scale: 1.15, ease: "none" }, 0);
+    masterTl.to('.geo-12', { x: 320,  y: -420, rotation: -120, scale: 0.85, ease: "none" }, 0);
+    masterTl.to('.geo-13', { x: -160, y: -580, scale: 1.1,  ease: "none" }, 0);
+    masterTl.to('.geo-14', { x: 260,  y: -460, rotation: 80,   scale: 0.9,  ease: "none" }, 0);
+    masterTl.to('.geo-15', { x: -220, y: -380, rotation: -150, scale: 1.15, ease: "none" }, 0);
+    masterTl.to('.geo-16', { x: 190,  y: -520, rotation: 180,  scale: 0.82, ease: "none" }, 0);
+    masterTl.to('.geo-17', { x: -150, y: -440, rotation: -45,  scale: 1.18, ease: "none" }, 0);
+    masterTl.to('.geo-18', { x: 110,  y: -320, scale: 0.88, ease: "none" }, 0);
 
-    // --- Layer 3: Near shapes (faster, more movement, rotation) ---
-    const nearTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.6
-      }
-    });
+    // --- Layer 4: Foreground accents — fastest parallax ---
+    masterTl.to('.geo-19', { x: -400, y: -680, rotation: 360,  ease: "none" }, 0);
+    masterTl.to('.geo-20', { x: 480,  y: -600, rotation: -240, ease: "none" }, 0);
+    masterTl.to('.geo-21', { x: -350, y: -750, rotation: 300,  ease: "none" }, 0);
+    masterTl.to('.geo-22', { x: 300,  y: -640, rotation: -360, ease: "none" }, 0);
+    masterTl.to('.geo-23', { x: -420, y: -560, rotation: 210,  ease: "none" }, 0);
+    masterTl.to('.geo-24', { x: 360,  y: -700, ease: "none" }, 0);
+    masterTl.to('.geo-25', { x: -260, y: -620, rotation: -120, ease: "none" }, 0);
 
-    nearTl.to('.geo-11', { x: -180, y: -300, rotation: 180, scale: 1.1, ease: "none" }, 0);
-    nearTl.to('.geo-12', { x: 200, y: -250, rotation: -90, scale: 0.9, ease: "none" }, 0);
-    nearTl.to('.geo-13', { x: -100, y: -350, scale: 1.05, ease: "none" }, 0);
-    nearTl.to('.geo-14', { x: 160, y: -280, rotation: 60, scale: 0.95, ease: "none" }, 0);
-    nearTl.to('.geo-15', { x: -140, y: -220, rotation: -120, scale: 1.1, ease: "none" }, 0);
-    nearTl.to('.geo-16', { x: 120, y: -310, rotation: 150, scale: 0.88, ease: "none" }, 0);
-    nearTl.to('.geo-17', { x: -90, y: -260, rotation: -30, scale: 1.12, ease: "none" }, 0);
-    nearTl.to('.geo-18', { x: 70, y: -190, scale: 0.92, ease: "none" }, 0);
+    // --- Rings — slow majestic rotation + gentle drift ---
+    masterTl.to('.geo-26', { x: -100, y: -300, rotation: 220,  scale: 1.2,  ease: "none" }, 0);
+    masterTl.to('.geo-27', { x: 130,  y: -380, rotation: -160, scale: 0.85, ease: "none" }, 0);
+    masterTl.to('.geo-28', { x: -160, y: -280, rotation: 130,  scale: 1.15, ease: "none" }, 0);
+    masterTl.to('.geo-29', { x: 80,   y: -220, rotation: -80,  scale: 0.8,  ease: "none" }, 0);
+    masterTl.to('.geo-30', { x: -120, y: -340, rotation: 180,  scale: 1.1,  ease: "none" }, 0);
 
-    // --- Layer 4: Foreground tiny accents (fastest parallax) ---
-    const fgTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.3
-      }
-    });
+    // --- Extra scattered accents — diagonal cinematic drift ---
+    masterTl.to('.geo-31', { x: -320, y: -480, rotation: 120,  scale: 1.15, ease: "none" }, 0);
+    masterTl.to('.geo-32', { x: 250,  y: -540, rotation: -80,  scale: 0.9,  ease: "none" }, 0);
+    masterTl.to('.geo-33', { x: -280, y: -420, rotation: 60,   ease: "none" }, 0);
+    masterTl.to('.geo-34', { x: 210,  y: -620, ease: "none" }, 0);
+    masterTl.to('.geo-35', { x: -180, y: -500, rotation: -110, scale: 1.12, ease: "none" }, 0);
 
-    fgTl.to('.geo-19', { x: -250, y: -400, rotation: 360, ease: "none" }, 0);
-    fgTl.to('.geo-20', { x: 300, y: -350, rotation: -180, ease: "none" }, 0);
-    fgTl.to('.geo-21', { x: -200, y: -450, rotation: 270, ease: "none" }, 0);
-    fgTl.to('.geo-22', { x: 180, y: -380, rotation: -360, ease: "none" }, 0);
-    fgTl.to('.geo-23', { x: -270, y: -320, rotation: 180, ease: "none" }, 0);
-    fgTl.to('.geo-24', { x: 220, y: -420, ease: "none" }, 0);
-    fgTl.to('.geo-25', { x: -160, y: -360, rotation: -90, ease: "none" }, 0);
-
-    // --- Rings: slow rotation + drift ---
-    const ringTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.2
-      }
-    });
-
-    ringTl.to('.geo-26', { x: -60, y: -180, rotation: 180, scale: 1.15, ease: "none" }, 0);
-    ringTl.to('.geo-27', { x: 80, y: -220, rotation: -120, scale: 0.9, ease: "none" }, 0);
-    ringTl.to('.geo-28', { x: -100, y: -160, rotation: 90, scale: 1.1, ease: "none" }, 0);
-    ringTl.to('.geo-29', { x: 50, y: -130, rotation: -60, scale: 0.85, ease: "none" }, 0);
-    ringTl.to('.geo-30', { x: -70, y: -200, rotation: 150, scale: 1.05, ease: "none" }, 0);
-
-    // --- Extra scattered accents (diagonal movements) ---
-    const extraTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.8
-      }
-    });
-
-    extraTl.to('.geo-31', { x: -200, y: -280, rotation: 90, scale: 1.1, ease: "none" }, 0);
-    extraTl.to('.geo-32', { x: 150, y: -320, rotation: -60, scale: 0.95, ease: "none" }, 0);
-    extraTl.to('.geo-33', { x: -180, y: -250, rotation: 45, ease: "none" }, 0);
-    extraTl.to('.geo-34', { x: 130, y: -370, ease: "none" }, 0);
-    extraTl.to('.geo-35', { x: -110, y: -300, rotation: -90, scale: 1.08, ease: "none" }, 0);
-
-    // =====================================================
-    // SCROLL-DRIVEN FLOATING ORBS
-    // Persistent orbs visible on every page, move with scroll
-    // Different speeds create depth / parallax
-    // =====================================================
-
-    // Slow layer (large, blurred orbs)
-    const sorbSlowTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 2
-      }
-    });
-
-    sorbSlowTl.to('.sorb-1',  { y: -300, x: 60,   scale: 1.1, ease: "none" }, 0);
-    sorbSlowTl.to('.sorb-3',  { y: -250, x: -80,  scale: 0.9, ease: "none" }, 0);
-    sorbSlowTl.to('.sorb-6',  { y: -350, x: 40,   scale: 1.05, ease: "none" }, 0);
-    sorbSlowTl.to('.sorb-10', { y: -280, x: -50,  scale: 0.95, ease: "none" }, 0);
-
-    // Medium layer
-    const sorbMidTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1
-      }
-    });
-
-    sorbMidTl.to('.sorb-2',  { y: -400, x: -100, scale: 1.08, ease: "none" }, 0);
-    sorbMidTl.to('.sorb-5',  { y: -450, x: 80,   scale: 0.92, ease: "none" }, 0);
-    sorbMidTl.to('.sorb-8',  { y: -380, x: -60,  scale: 1.1, ease: "none" }, 0);
-    sorbMidTl.to('.sorb-9',  { y: -420, x: 100,  scale: 0.95, ease: "none" }, 0);
-    sorbMidTl.to('.sorb-12', { y: -350, x: -70,  scale: 1.05, ease: "none" }, 0);
-
-    // Fast layer (small, sharp orbs)
-    const sorbFastTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.5
-      }
-    });
-
-    sorbFastTl.to('.sorb-4',  { y: -550, x: -120, scale: 1.15, ease: "none" }, 0);
-    sorbFastTl.to('.sorb-7',  { y: -600, x: 90,   ease: "none" }, 0);
-    sorbFastTl.to('.sorb-11', { y: -500, x: -80,  ease: "none" }, 0);
-
-    // Rings — slow drift + rotation
-    const sorbRingTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5
-      }
-    });
-
-    sorbRingTl.to('.sorb-ring-1', { y: -200, x: -40, rotation: 180, scale: 1.1, ease: "none" }, 0);
-    sorbRingTl.to('.sorb-ring-2', { y: -250, x: 60,  rotation: -120, scale: 0.9, ease: "none" }, 0);
-    sorbRingTl.to('.sorb-ring-3', { y: -180, x: -30, rotation: 90,  scale: 1.05, ease: "none" }, 0);
+    // --- Line accents — slow horizontal + vertical drift ---
+    masterTl.to('.geo-line-1', { x: 300,  y: -150, rotation: 5,   ease: "none" }, 0);
+    masterTl.to('.geo-line-2', { x: -250, y: -200, rotation: -3,  ease: "none" }, 0);
+    masterTl.to('.geo-line-3', { x: 180,  y: -350, rotation: 8,   ease: "none" }, 0);
+    masterTl.to('.geo-line-4', { x: -200, y: -100, rotation: -6,  ease: "none" }, 0);
+    masterTl.to('.geo-line-5', { x: 150,  y: -280, rotation: 4,   ease: "none" }, 0);
 
   }, [isLoading, isScrolling]);
+
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -1206,33 +1083,13 @@ function App() {
         <div className="geo-el geo-box  geo-grad-cp geo-fg   geo-xs geo-33"></div>
         <div className="geo-el geo-orb  geo-white   geo-fg   geo-xs geo-34"></div>
         <div className="geo-el geo-hex  geo-grad-pb geo-mid  geo-md geo-35"></div>
-      </div>
 
-      {/* Scroll-Driven Floating Orbs — persistent across all pages */}
-      <div className="scroll-orbs">
-        <div className="scroll-orb sorb-1"></div>
-        <div className="scroll-orb sorb-2"></div>
-        <div className="scroll-orb sorb-3"></div>
-        <div className="scroll-orb sorb-4"></div>
-        <div className="scroll-orb sorb-5"></div>
-        <div className="scroll-orb sorb-6"></div>
-        <div className="scroll-orb sorb-7"></div>
-        <div className="scroll-orb sorb-8"></div>
-        <div className="scroll-orb sorb-9"></div>
-        <div className="scroll-orb sorb-10"></div>
-        <div className="scroll-orb sorb-11"></div>
-        <div className="scroll-orb sorb-12"></div>
-        <div className="scroll-orb sorb-ring-1"></div>
-        <div className="scroll-orb sorb-ring-2"></div>
-        <div className="scroll-orb sorb-ring-3"></div>
-      </div>
-
-      {/* Background Effects */}
-      <div className="floating-orbs">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-        <div className="orb orb-4"></div>
+        {/* Line accents — thin futuristic UI lines */}
+        <div className="geo-el geo-line geo-line-h geo-line-w geo-mid geo-line-1"></div>
+        <div className="geo-el geo-line geo-line-v geo-line-p geo-near geo-line-2"></div>
+        <div className="geo-el geo-line geo-line-d geo-line-c geo-fg geo-line-3"></div>
+        <div className="geo-el geo-line geo-line-h geo-line-p geo-far geo-line-4"></div>
+        <div className="geo-el geo-line geo-line-v geo-line-w geo-mid geo-line-5"></div>
       </div>
 
       <div className="particles" ref={particlesRef}></div>

@@ -17,11 +17,13 @@
   --color-dark-gray: #1a1a1a;
   --color-mid-gray: #4a4a4a;
   --color-light-gray: #7a7a7a;
-  --color-off-white: #f5f5f5;
+  --color-off-white: #f0eee6;
   --color-white: #ffffff;
-  --color-pink: #ff0077;
-  --color-light-pink: #ff66aa;
-  --color-cream: #f8f8f2;
+  --color-pink: #e88bcd;
+  --color-light-pink: #f0a8d8;
+  --color-cream: #f0eee6;
+  --color-light-blue: #7ecbf5;
+  --color-cyan: #5ce0d8;
 
   /* Typography */
   --font-heading: "Space Grotesk", sans-serif;
@@ -38,14 +40,14 @@
 
 /* Selection */
 ::selection {
-  background: var(--color-white);
+  background: var(--color-pink);
   color: var(--color-black);
 }
 
 html {
   font-family: var(--font-body);
   background-color: var(--color-black);
-  color: var(--color-white);
+  color: var(--color-cream);
   scroll-behavior: auto;
 }
 
@@ -724,7 +726,7 @@ section {
   font-family: var(--font-body);
   font-size: clamp(0.85rem, 1.5vw, 1rem);
   font-weight: 300;
-  color: var(--color-mid-gray);
+  color: var(--color-light-gray);
   opacity: 0;
   display: inline-block;
 }
@@ -833,7 +835,7 @@ section {
   font-size: 0.75rem;
   letter-spacing: var(--tracking-mega);
   text-transform: uppercase;
-  color: var(--color-mid-gray);
+  color: var(--color-light-blue);
   opacity: 0;
 }
 
@@ -944,7 +946,7 @@ section {
   font-size: 0.7rem;
   letter-spacing: var(--tracking-mega);
   text-transform: uppercase;
-  color: var(--color-mid-gray);
+  color: var(--color-light-blue);
   opacity: 0;
 }
 
@@ -1273,7 +1275,7 @@ section {
   font-weight: 400;
   letter-spacing: var(--tracking-mega);
   text-transform: uppercase;
-  color: var(--color-light-gray);
+  color: var(--color-light-blue);
   opacity: 0;
 }
 
@@ -2662,7 +2664,7 @@ section {
 }
 
 .gradient-text {
-  background: linear-gradient(45deg, var(--color-pink), var(--color-white), var(--color-light-pink), var(--color-cream));
+  background: linear-gradient(45deg, var(--color-light-blue), var(--color-pink), var(--color-cream), var(--color-light-pink), var(--color-light-blue));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -2886,6 +2888,11 @@ section {
    SCROLL-DRIVEN GEOMETRIC MOTION BACKGROUND
    Premium GSAP showcase-level decorative layer
    ============================================ */
+/* ============================================
+   CINEMATIC SCROLL-DRIVEN MOTION SYSTEM
+   Premium layered background with depth illusion
+   ============================================ */
+
 .geometric-motion-bg {
   position: fixed;
   top: 0;
@@ -2904,194 +2911,151 @@ section {
   pointer-events: none;
 }
 
-/* --- Circles: filled orbs --- */
-.geo-orb {
-  border-radius: 50%;
-}
+/* --- Shape: filled orbs --- */
+.geo-orb { border-radius: 50%; }
 
-/* --- Circles: ring outlines --- */
+/* --- Shape: ring outlines --- */
 .geo-ring {
   border-radius: 50%;
   background: transparent;
 }
 
-/* --- Squares / Rectangles --- */
-.geo-box {
-  border-radius: 2px;
-}
+/* --- Shape: box / rectangle --- */
+.geo-box { border-radius: 3px; }
 
-/* --- Triangles via clip-path --- */
-.geo-tri {
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
+/* --- Shape: triangle --- */
+.geo-tri { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
 
-/* --- Diamond --- */
-.geo-diamond {
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
+/* --- Shape: diamond --- */
+.geo-diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
 
-/* --- Cross / Plus --- */
+/* --- Shape: cross / plus --- */
 .geo-cross {
   clip-path: polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%);
 }
 
-/* --- Hexagon --- */
-.geo-hex {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-}
+/* --- Shape: hexagon --- */
+.geo-hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+
+/* --- Shape: line accent (thin futuristic lines) --- */
+.geo-line { border-radius: 1px; }
+.geo-line-h { width: 200px; height: 1px; }   /* horizontal */
+.geo-line-v { width: 1px;   height: 180px; } /* vertical */
+.geo-line-d { width: 160px; height: 1px; transform: rotate(35deg); } /* diagonal */
 
 /* =========================
-   COLOR VARIANTS
+   COLOR VARIANTS — rich cinematic gradients
    ========================= */
+.geo-purple  { background: radial-gradient(circle, rgba(139,92,246,0.7) 0%, rgba(139,92,246,0) 65%); }
+.geo-blue    { background: radial-gradient(circle, rgba(59,130,246,0.7) 0%, rgba(59,130,246,0) 65%); }
+.geo-cyan    { background: radial-gradient(circle, rgba(6,182,212,0.7) 0%, rgba(6,182,212,0) 65%); }
+.geo-white   { background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 65%); }
+.geo-gray    { background: radial-gradient(circle, rgba(140,140,140,0.5) 0%, rgba(140,140,140,0) 65%); }
+.geo-pink    { background: radial-gradient(circle, rgba(236,72,153,0.6) 0%, rgba(236,72,153,0) 65%); }
+.geo-grad-pb { background: linear-gradient(135deg, rgba(139,92,246,0.45), rgba(59,130,246,0.25)); }
+.geo-grad-cp { background: linear-gradient(135deg, rgba(6,182,212,0.4), rgba(139,92,246,0.2)); }
+.geo-solid-w { background: rgba(255,255,255,0.15); }
 
-/* Purple gradient */
-.geo-purple { background: radial-gradient(circle, rgba(139,92,246,0.6) 0%, rgba(139,92,246,0) 70%); }
-/* Blue gradient */
-.geo-blue { background: radial-gradient(circle, rgba(59,130,246,0.6) 0%, rgba(59,130,246,0) 70%); }
-/* Cyan gradient */
-.geo-cyan { background: radial-gradient(circle, rgba(6,182,212,0.6) 0%, rgba(6,182,212,0) 70%); }
-/* White / light */
-.geo-white { background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%); }
-/* Gray */
-.geo-gray { background: radial-gradient(circle, rgba(120,120,120,0.4) 0%, rgba(120,120,120,0) 70%); }
-/* Pink accent */
-.geo-pink { background: radial-gradient(circle, rgba(236,72,153,0.5) 0%, rgba(236,72,153,0) 70%); }
-/* Purple-blue gradient (for boxes/tris) */
-.geo-grad-pb { background: linear-gradient(135deg, rgba(139,92,246,0.35), rgba(59,130,246,0.2)); }
-/* Cyan-purple gradient */
-.geo-grad-cp { background: linear-gradient(135deg, rgba(6,182,212,0.3), rgba(139,92,246,0.15)); }
-/* White-gray solid */
-.geo-solid-w { background: rgba(255,255,255,0.12); }
+/* Line color variants */
+.geo-line-w  { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); }
+.geo-line-p  { background: linear-gradient(90deg, transparent, rgba(139,92,246,0.25), transparent); }
+.geo-line-c  { background: linear-gradient(90deg, transparent, rgba(6,182,212,0.2), transparent); }
+
 /* Ring stroke variants */
-.geo-ring-w { border: 1px solid rgba(255,255,255,0.08); }
-.geo-ring-p { border: 1px solid rgba(139,92,246,0.12); }
-.geo-ring-c { border: 1px solid rgba(6,182,212,0.1); }
+.geo-ring-w  { border: 1.5px solid rgba(255,255,255,0.1); }
+.geo-ring-p  { border: 1.5px solid rgba(139,92,246,0.15); }
+.geo-ring-c  { border: 1.5px solid rgba(6,182,212,0.12); }
 
 /* =========================
-   DEPTH LAYERS (blur + opacity)
+   DEPTH LAYERS — blur + opacity tuned for visibility
    ========================= */
 
-/* Far layer - most blurred, very faint */
+/* Far — deep background, heavy blur, subtle glow */
 .geo-far {
-  opacity: 0.05;
-  filter: blur(30px);
+  opacity: 0.12;
+  filter: blur(40px);
 }
-/* Mid layer */
+/* Mid — moderate depth */
 .geo-mid {
-  opacity: 0.1;
-  filter: blur(15px);
-}
-/* Near layer - sharper, slightly brighter */
-.geo-near {
   opacity: 0.18;
-  filter: blur(6px);
+  filter: blur(18px);
 }
-/* Foreground accent - sharpest */
+/* Near — closer, sharper */
+.geo-near {
+  opacity: 0.22;
+  filter: blur(8px);
+}
+/* Foreground — sharpest accents */
 .geo-fg {
-  opacity: 0.25;
+  opacity: 0.28;
   filter: blur(2px);
 }
 
 /* =========================
    SIZE CLASSES
    ========================= */
-.geo-xs  { width: 20px;  height: 20px; }
-.geo-sm  { width: 40px;  height: 40px; }
-.geo-md  { width: 70px;  height: 70px; }
-.geo-lg  { width: 120px; height: 120px; }
-.geo-xl  { width: 200px; height: 200px; }
-.geo-2xl { width: 320px; height: 320px; }
+.geo-xs  { width: 24px;  height: 24px; }
+.geo-sm  { width: 50px;  height: 50px; }
+.geo-md  { width: 85px;  height: 85px; }
+.geo-lg  { width: 140px; height: 140px; }
+.geo-xl  { width: 240px; height: 240px; }
+.geo-2xl { width: 380px; height: 380px; }
 
 /* =========================
-   INDIVIDUAL POSITIONS
-   35 elements spread across viewport
+   POSITIONS — 35 shapes + 5 lines across viewport
    ========================= */
 
-/* --- Layer 1: Far / Large orbs (depth backdrop) --- */
-.geo-1  { top: 5%;   left: 8%; }
-.geo-2  { top: 15%;  right: 5%; }
+/* Layer 1: Far / Large orbs */
+.geo-1  { top: 5%;    left: 8%; }
+.geo-2  { top: 15%;   right: 5%; }
 .geo-3  { bottom: 10%; left: 25%; }
-.geo-4  { top: 45%;  right: 12%; }
+.geo-4  { top: 45%;   right: 12%; }
 
-/* --- Layer 2: Mid / Medium shapes --- */
-.geo-5  { top: 12%;  left: 55%; }
-.geo-6  { top: 65%;  left: 8%; }
+/* Layer 2: Mid shapes */
+.geo-5  { top: 12%;   left: 55%; }
+.geo-6  { top: 65%;   left: 8%; }
 .geo-7  { bottom: 25%; right: 18%; }
-.geo-8  { top: 30%;  left: 3%; }
-.geo-9  { top: 75%;  right: 8%; }
+.geo-8  { top: 30%;   left: 3%; }
+.geo-9  { top: 75%;   right: 8%; }
 .geo-10 { bottom: 5%;  left: 50%; }
 
-/* --- Layer 3: Near / Smaller geometric --- */
-.geo-11 { top: 8%;   left: 35%; }
-.geo-12 { top: 22%;  right: 30%; }
-.geo-13 { top: 50%;  left: 18%; }
+/* Layer 3: Near / Smaller geometric */
+.geo-11 { top: 8%;    left: 35%; }
+.geo-12 { top: 22%;   right: 30%; }
+.geo-13 { top: 50%;   left: 18%; }
 .geo-14 { bottom: 20%; left: 42%; }
-.geo-15 { top: 38%;  right: 5%; }
+.geo-15 { top: 38%;   right: 5%; }
 .geo-16 { bottom: 35%; right: 30%; }
-.geo-17 { top: 60%;  left: 65%; }
+.geo-17 { top: 60%;   left: 65%; }
 .geo-18 { bottom: 45%; left: 5%; }
 
-/* --- Layer 4: Foreground accents (tiny, sharp) --- */
-.geo-19 { top: 18%;  left: 22%; }
-.geo-20 { top: 42%;  left: 48%; }
-.geo-21 { top: 70%;  right: 22%; }
+/* Layer 4: Foreground accents */
+.geo-19 { top: 18%;   left: 22%; }
+.geo-20 { top: 42%;   left: 48%; }
+.geo-21 { top: 70%;   right: 22%; }
 .geo-22 { bottom: 15%; left: 12%; }
-.geo-23 { top: 28%;  right: 42%; }
+.geo-23 { top: 28%;   right: 42%; }
 .geo-24 { bottom: 40%; right: 10%; }
-.geo-25 { top: 55%;  left: 38%; }
+.geo-25 { top: 55%;   left: 38%; }
 
-/* --- Rings (outlines) --- */
-.geo-26 { top: 20%;  left: 70%; }
-.geo-27 { top: 80%;  left: 30%; }
+/* Rings */
+.geo-26 { top: 20%;   left: 70%; }
+.geo-27 { top: 80%;   left: 30%; }
 .geo-28 { bottom: 30%; right: 25%; }
-.geo-29 { top: 10%;  right: 15%; }
-.geo-30 { top: 50%;  left: 80%; }
+.geo-29 { top: 10%;   right: 15%; }
+.geo-30 { top: 50%;   left: 80%; }
 
-/* --- Extra scattered accents --- */
-.geo-31 { top: 35%;  left: 90%; }
+/* Extra scattered accents */
+.geo-31 { top: 35%;   left: 90%; }
 .geo-32 { bottom: 8%;  right: 45%; }
-.geo-33 { top: 88%;  left: 60%; }
-.geo-34 { top: 3%;   left: 45%; }
+.geo-33 { top: 88%;   left: 60%; }
+.geo-34 { top: 3%;    left: 45%; }
 .geo-35 { bottom: 50%; left: 15%; }
 
-/* ============================================
-   SCROLL-DRIVEN FLOATING ORBS
-   Persistent orbs that drift with scroll
-   across the entire page
-   ============================================ */
-.scroll-orbs {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
+/* Line accent positions */
+.geo-line-1 { top: 25%;   left: 5%; }
+.geo-line-2 { top: 55%;   right: 8%; }
+.geo-line-3 { top: 15%;   left: 65%; }
+.geo-line-4 { bottom: 20%; left: 30%; }
+.geo-line-5 { top: 72%;   left: 12%; }
 
-.scroll-orb {
-  position: absolute;
-  border-radius: 50%;
-  will-change: transform;
-  pointer-events: none;
-}
-
-/* Soft gradient orbs */
-.sorb-1  { width: 180px; height: 180px; top: 8%;   left: 5%;   background: radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%); filter: blur(25px); opacity: 0.15; }
-.sorb-2  { width: 120px; height: 120px; top: 20%;  right: 10%; background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);  filter: blur(20px); opacity: 0.12; }
-.sorb-3  { width: 250px; height: 250px; top: 35%;  left: 60%;  background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%);   filter: blur(35px); opacity: 0.08; }
-.sorb-4  { width: 90px;  height: 90px;  top: 55%;  left: 15%;  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); filter: blur(12px); opacity: 0.18; }
-.sorb-5  { width: 160px; height: 160px; top: 70%;  right: 20%; background: radial-gradient(circle, rgba(236,72,153,0.25) 0%, transparent 70%); filter: blur(22px); opacity: 0.1; }
-.sorb-6  { width: 200px; height: 200px; top: 85%;  left: 40%;  background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);  filter: blur(30px); opacity: 0.1; }
-.sorb-7  { width: 70px;  height: 70px;  top: 15%;  left: 75%;  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%); filter: blur(8px);  opacity: 0.2; }
-.sorb-8  { width: 140px; height: 140px; top: 45%;  right: 5%;  background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%); filter: blur(18px); opacity: 0.12; }
-.sorb-9  { width: 100px; height: 100px; top: 30%;  left: 30%;  background: radial-gradient(circle, rgba(6,182,212,0.3) 0%, transparent 70%);  filter: blur(15px); opacity: 0.15; }
-.sorb-10 { width: 220px; height: 220px; top: 60%;  left: 70%;  background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%); filter: blur(30px); opacity: 0.08; }
-.sorb-11 { width: 60px;  height: 60px;  top: 80%;  left: 10%;  background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%); filter: blur(6px);  opacity: 0.22; }
-.sorb-12 { width: 130px; height: 130px; top: 5%;   left: 45%;  background: radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%);  filter: blur(20px); opacity: 0.1; }
-
-/* Outlined rings that float */
-.sorb-ring-1 { width: 150px; height: 150px; top: 25%; left: 85%;  border: 1px solid rgba(255,255,255,0.06); opacity: 0.3; filter: blur(1px); }
-.sorb-ring-2 { width: 100px; height: 100px; top: 50%; left: 2%;   border: 1px solid rgba(139,92,246,0.1);   opacity: 0.25; filter: blur(1px); }
-.sorb-ring-3 { width: 200px; height: 200px; top: 75%; right: 30%; border: 1px solid rgba(6,182,212,0.08);   opacity: 0.2; filter: blur(2px); }

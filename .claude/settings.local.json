@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx vite build)",
-      "WebFetch(domain:gsap.com)"
+      "WebFetch(domain:gsap.com)",
+      "WebFetch(domain:madewithgsap.com)",
+      "Bash(npm run build:*)"
     ]
   }
 }

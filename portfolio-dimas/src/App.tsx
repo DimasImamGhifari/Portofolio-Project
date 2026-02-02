@@ -409,6 +409,54 @@ function App() {
       // =====================
       const heroTl = gsap.timeline({ delay: 0.3 });
 
+      // Glitch animation function
+      const glitchText = (element: Element, duration: number = 0.6) => {
+        const tl = gsap.timeline();
+        const text = element.textContent || '';
+        element.setAttribute('data-text', text);
+        
+        tl.to(element, {
+          duration: 0.05,
+          opacity: 1,
+          ease: 'power2.inOut',
+          onStart: () => element.classList.add('glitch-active'),
+        })
+        .to(element, {
+          duration: 0.1,
+          x: -8,
+          ease: 'power2.inOut',
+        })
+        .to(element, {
+          duration: 0.1,
+          x: 8,
+          skewX: 10,
+          ease: 'power2.inOut',
+        })
+        .to(element, {
+          duration: 0.1,
+          x: -5,
+          skewX: -5,
+          ease: 'power2.inOut',
+        })
+        .to(element, {
+          duration: 0.1,
+          x: 3,
+          skewX: 2,
+          ease: 'power2.inOut',
+        })
+        .to(element, {
+          duration: 0.15,
+          x: 0,
+          skewX: 0,
+          ease: 'elastic.out(1, 0.3)',
+          onComplete: () => {
+            setTimeout(() => element.classList.remove('glitch-active'), 300);
+          },
+        });
+        
+        return tl;
+      };
+
       heroTl
         .fromTo('.hero-circle',
           { scale: 0, opacity: 0 },
@@ -422,6 +470,12 @@ function App() {
           { clipPath: 'inset(100% 0 0 0)', y: 80 },
           { clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1, duration: 1.4, stagger: 0.15, ease: 'power4.out' }, '-=1'
         )
+        .add(() => {
+          const nameElements = document.querySelectorAll('.hero-name h1');
+          nameElements.forEach((el, index) => {
+            setTimeout(() => glitchText(el), index * 150);
+          });
+        }, '-=0.3')
         .fromTo('.hero-subtitle p',
           { clipPath: 'inset(100% 0 0 0)', y: 40 },
           { clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '-=0.7'

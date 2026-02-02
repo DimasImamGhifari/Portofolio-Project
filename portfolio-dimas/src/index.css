@@ -700,6 +700,52 @@ section {
   font-size: clamp(3.5rem, 13vw, 12rem);
 }
 
+/* Glitch animation for hero name */
+.hero-name h1.glitch-active {
+  position: relative;
+}
+
+.hero-name h1.glitch-active::before,
+.hero-name h1.glitch-active::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.hero-name h1.glitch-active::before {
+  color: #ff00ff;
+  animation: glitch-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+
+.hero-name h1.glitch-active::after {
+  color: #00ffff;
+  animation: glitch-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+  0% { transform: translate(0); }
+  20% { transform: translate(-5px, 5px); }
+  40% { transform: translate(-5px, -5px); }
+  60% { transform: translate(5px, 5px); }
+  80% { transform: translate(5px, -5px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0% { transform: translate(0); }
+  20% { transform: translate(5px, -5px); }
+  40% { transform: translate(5px, 5px); }
+  60% { transform: translate(-5px, -5px); }
+  80% { transform: translate(-5px, 5px); }
+  100% { transform: translate(0); }
+}
+
 .hero-subtitle {
   margin-top: 3rem;
   overflow: hidden;

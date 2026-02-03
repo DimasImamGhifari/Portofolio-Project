@@ -134,6 +134,7 @@ function App() {
   const particlesRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const scrollTimeoutRef = useRef<number | null>(null);
+  const scrollLineRef = useRef<SVGPathElement>(null);
 
   // Create particles
   const createParticles = useCallback(() => {
@@ -384,6 +385,8 @@ function App() {
   useEffect(() => {
     if (isLoading) return;
 
+    let glitchIntervalId: number | undefined;
+
     const ctx = gsap.context(() => {
 
       // --- Nav dots slide in ---
@@ -409,51 +412,37 @@ function App() {
       // =====================
       const heroTl = gsap.timeline({ delay: 0.3 });
 
-      // Glitch animation function
-      const glitchText = (element: Element, duration: number = 0.6) => {
+      // Glitch animation function — dramatic chromatic split
+      const glitchText = (element: Element) => {
         const tl = gsap.timeline();
         const text = element.textContent || '';
         element.setAttribute('data-text', text);
-        
+
         tl.to(element, {
-          duration: 0.05,
+          duration: 0.03,
           opacity: 1,
-          ease: 'power2.inOut',
+          ease: 'power4.inOut',
           onStart: () => element.classList.add('glitch-active'),
         })
+        .to(element, { duration: 0.05, x: -15, scaleX: 1.03, ease: 'power4.inOut' })
+        .to(element, { duration: 0.04, x: 12, skewX: 20, ease: 'power4.inOut' })
+        .to(element, { duration: 0.05, x: -10, skewX: -15, scaleX: 0.97, ease: 'power4.inOut' })
+        .to(element, { duration: 0.03, x: 14, skewX: 12, ease: 'power4.inOut' })
+        .to(element, { duration: 0.04, x: -8, skewX: -8, scaleX: 1.02, ease: 'power4.inOut' })
+        .to(element, { duration: 0.03, x: 10, skewX: 6, ease: 'power4.inOut' })
+        .to(element, { duration: 0.04, x: -5, skewX: -3, ease: 'power4.inOut' })
+        .to(element, { duration: 0.03, x: 6, skewX: 2, ease: 'power4.inOut' })
         .to(element, {
-          duration: 0.1,
-          x: -8,
-          ease: 'power2.inOut',
-        })
-        .to(element, {
-          duration: 0.1,
-          x: 8,
-          skewX: 10,
-          ease: 'power2.inOut',
-        })
-        .to(element, {
-          duration: 0.1,
-          x: -5,
-          skewX: -5,
-          ease: 'power2.inOut',
-        })
-        .to(element, {
-          duration: 0.1,
-          x: 3,
-          skewX: 2,
-          ease: 'power2.inOut',
-        })
-        .to(element, {
-          duration: 0.15,
+          duration: 0.2,
           x: 0,
           skewX: 0,
+          scaleX: 1,
           ease: 'elastic.out(1, 0.3)',
           onComplete: () => {
-            setTimeout(() => element.classList.remove('glitch-active'), 300);
+            setTimeout(() => element.classList.remove('glitch-active'), 500);
           },
         });
-        
+
         return tl;
       };
 
@@ -512,6 +501,15 @@ function App() {
           scrub: 1.5,
         },
       });
+
+      // Recurring subtle glitch on hero name
+      glitchIntervalId = window.setInterval(() => {
+        const nameEls = document.querySelectorAll('.hero-name h1');
+        if (nameEls.length === 0) return;
+        const randomIndex = Math.floor(Math.random() * nameEls.length);
+        const el = nameEls[randomIndex];
+        if (el) glitchText(el);
+      }, 5000);
 
       // =====================
       // ORIGIN SECTION
@@ -908,6 +906,35 @@ function App() {
           { clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, '-=0.4'
         );
 
+      // =====================
+      // SCROLL GUIDE LINE — draw on scroll
+      // =====================
+      if (scrollLineRef.current) {
+        const lineLength = scrollLineRef.current.getTotalLength();
+
+        gsap.set('.scroll-line-glow', {
+          strokeDasharray: lineLength,
+          strokeDashoffset: lineLength,
+          opacity: 0.12,
+        });
+        gsap.set('.scroll-line-path', {
+          strokeDasharray: lineLength,
+          strokeDashoffset: lineLength,
+          opacity: 0.25,
+        });
+
+        gsap.to('.scroll-line-path, .scroll-line-glow', {
+          strokeDashoffset: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: mainRef.current,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.5,
+          },
+        });
+      }
+
       // Navigation dots — active section tracking
       sections.forEach((section, index) => {
         ScrollTrigger.create({
@@ -1010,6 +1037,7 @@ function App() {
     return () => {
       ctx.revert();
       masterTl.kill();
+      if (glitchIntervalId) clearInterval(glitchIntervalId);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isLoading]);
@@ -1138,6 +1166,36 @@ function App() {
 
       {/* Main content */}
       <main className="main-container" ref={mainRef}>
+
+        {/* Scroll Guide Line */}
+        <svg className="scroll-line-svg" viewBox="0 0 200 3000" preserveAspectRatio="none" fill="none">
+          <defs>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#e88bcd" />
+              <stop offset="50%" stopColor="#f0a8d8" />
+              <stop offset="100%" stopColor="#e88bcd" />
+            </linearGradient>
+          </defs>
+          <path
+            className="scroll-line-glow"
+            d="M 10,250 C 55,450 15,650 50,850 C 90,1050 40,1250 90,1450 C 140,1650 85,1850 135,2050 C 180,2250 145,2450 190,2650 C 198,2780 200,2900 195,3000"
+            stroke="url(#lineGrad)"
+            strokeWidth="6"
+            strokeLinecap="round"
+            fill="none"
+            opacity="0"
+          />
+          <path
+            ref={scrollLineRef}
+            className="scroll-line-path"
+            d="M 10,250 C 55,450 15,650 50,850 C 90,1050 40,1250 90,1450 C 140,1650 85,1850 135,2050 C 180,2250 145,2450 190,2650 C 198,2780 200,2900 195,3000"
+            stroke="url(#lineGrad)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            fill="none"
+            opacity="0"
+          />
+        </svg>
 
         {/* HERO */}
         <section className="hero" id="hero">

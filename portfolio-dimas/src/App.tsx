@@ -927,9 +927,10 @@ function App() {
           strokeDashoffset: 0,
           ease: 'none',
           scrollTrigger: {
-            trigger: mainRef.current,
-            start: 'top top',
-            end: 'bottom bottom',
+            trigger: '.origin',
+            start: 'top center',
+            endTrigger: '.about',
+            end: 'bottom center',
             scrub: 1.5,
           },
         });
@@ -1167,35 +1168,7 @@ function App() {
       {/* Main content */}
       <main className="main-container" ref={mainRef}>
 
-        {/* Scroll Guide Line */}
-        <svg className="scroll-line-svg" viewBox="0 0 200 3000" preserveAspectRatio="none" fill="none">
-          <defs>
-            <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#e88bcd" />
-              <stop offset="50%" stopColor="#f0a8d8" />
-              <stop offset="100%" stopColor="#e88bcd" />
-            </linearGradient>
-          </defs>
-          <path
-            className="scroll-line-glow"
-            d="M 10,250 C 55,450 15,650 50,850 C 90,1050 40,1250 90,1450 C 140,1650 85,1850 135,2050 C 180,2250 145,2450 190,2650 C 198,2780 200,2900 195,3000"
-            stroke="url(#lineGrad)"
-            strokeWidth="6"
-            strokeLinecap="round"
-            fill="none"
-            opacity="0"
-          />
-          <path
-            ref={scrollLineRef}
-            className="scroll-line-path"
-            d="M 10,250 C 55,450 15,650 50,850 C 90,1050 40,1250 90,1450 C 140,1650 85,1850 135,2050 C 180,2250 145,2450 190,2650 C 198,2780 200,2900 195,3000"
-            stroke="url(#lineGrad)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            fill="none"
-            opacity="0"
-          />
-        </svg>
+        {/* Scroll Guide Line — removed from here, now inside origin-about wrapper */}
 
         {/* HERO */}
         <section className="hero" id="hero">
@@ -1243,51 +1216,83 @@ function App() {
           </div>
         </section>
 
-        {/* ORIGIN */}
-        <section className="origin" id="origin">
-          <div className="origin-bg">
-            <div className="origin-grid"></div>
-          </div>
-          <div className="origin-content">
-            <div className="origin-label">
-              <span>Where It All Began</span>
-            </div>
-            <div className="origin-place">
-              <h2>Born in Amuntai</h2>
-            </div>
-            <div className="origin-date">
-              <h3>11 June 2004</h3>
-            </div>
-            <div className="origin-divider"></div>
-            <div className="origin-narrative">
-              <p>A starting point of a journey shaped by curiosity and creativity.</p>
-            </div>
-          </div>
-        </section>
+        {/* ORIGIN + ABOUT wrapper with scroll guide line */}
+        <div className="origin-about-wrapper">
+          <svg className="scroll-line-svg" viewBox="0 0 60 1000" preserveAspectRatio="none" fill="none">
+            <defs>
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#e88bcd" />
+                <stop offset="50%" stopColor="#f0a8d8" />
+                <stop offset="100%" stopColor="#e88bcd" />
+              </linearGradient>
+            </defs>
+            <path
+              className="scroll-line-glow"
+              d="M 15,0 C 30,200 5,400 25,500 C 40,600 10,800 15,1000"
+              stroke="url(#lineGrad)"
+              strokeWidth="6"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0"
+            />
+            <path
+              ref={scrollLineRef}
+              className="scroll-line-path"
+              d="M 15,0 C 30,200 5,400 25,500 C 40,600 10,800 15,1000"
+              stroke="url(#lineGrad)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0"
+            />
+          </svg>
 
-        {/* ABOUT */}
-        <section className="about" id="about">
-          <div className="about-marquee">
-            <div className="about-marquee-inner">
-              <span>ABOUT</span>
-              <span>ABOUT</span>
-              <span>ABOUT</span>
-              <span>ABOUT</span>
+          {/* ORIGIN */}
+          <section className="origin" id="origin">
+            <div className="origin-bg">
+              <div className="origin-grid"></div>
             </div>
-          </div>
-          <div className="about-content">
-            <div className="section-label">
-              <span>Who I Am</span>
+            <div className="origin-content">
+              <div className="origin-label">
+                <span>Where It All Began</span>
+              </div>
+              <div className="origin-place">
+                <h2>Born in Amuntai</h2>
+              </div>
+              <div className="origin-date">
+                <h3>11 June 2004</h3>
+              </div>
+              <div className="origin-divider"></div>
+              <div className="origin-narrative">
+                <p>A starting point of a journey shaped by curiosity and creativity.</p>
+              </div>
             </div>
-            <div className="section-title">
-              <h2 className="gradient-text">About</h2>
+          </section>
+
+          {/* ABOUT */}
+          <section className="about" id="about">
+            <div className="about-marquee">
+              <div className="about-marquee-inner">
+                <span>ABOUT</span>
+                <span>ABOUT</span>
+                <span>ABOUT</span>
+                <span>ABOUT</span>
+              </div>
             </div>
-            <div className="about-text">
-              <p>An Informatics student passionate about web development, powered by coffee.
-                Currently improving frontend and backend skills with Laravel and Vue through real projects, debugging sessions, and continuous learning.</p>
+            <div className="about-content">
+              <div className="section-label">
+                <span>Who I Am</span>
+              </div>
+              <div className="section-title">
+                <h2 className="gradient-text">About</h2>
+              </div>
+              <div className="about-text">
+                <p>An Informatics student passionate about web development, powered by coffee.
+                  Currently improving frontend and backend skills with Laravel and Vue through real projects, debugging sessions, and continuous learning.</p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
         {/* EDUCATION */}
         <section className="education" id="education">
